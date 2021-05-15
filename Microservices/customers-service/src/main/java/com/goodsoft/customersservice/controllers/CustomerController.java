@@ -2,6 +2,7 @@ package com.goodsoft.customersservice.controllers;
 
 import com.goodsoft.customersservice.entities.Customer;
 import com.goodsoft.customersservice.entities.CustomerEmail;
+import com.goodsoft.customersservice.logic.ICustomersManager;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,21 +15,17 @@ import java.util.List;
 @RequestMapping("/customers")
 public class CustomerController
 {
+    private ICustomersManager _manager;
+
+    public CustomerController(ICustomersManager manager)
+    {
+        _manager = manager;
+    }
+
     @GetMapping(value = "/{id}")
-    public Customer findById(@PathVariable("id") Long id) {
+    public List<Customer> findById(@PathVariable("id") Long id) {
 
-        var customer = new Customer();
-        customer.setFirstName("Iliya");
-        customer.setLastName("Nahshan");
-
-        var primaryEmail = new CustomerEmail();
-        primaryEmail.setEmail("iliya.nahshan@gmail.com");
-        primaryEmail.setPrimary(true);
-
-        var emails = new ArrayList<CustomerEmail>();
-        emails.add(primaryEmail);
-        customer.setEmails(emails);
-
-        return customer;
+        var customers = _manager.GetById(id);
+        return customers;
     }
 }

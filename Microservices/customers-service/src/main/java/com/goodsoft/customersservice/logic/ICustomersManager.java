@@ -1,9 +1,10 @@
 package com.goodsoft.customersservice.logic;
 
-import com.goodsoft.customersservice.requests.GetCustomerByIdRequest;
-import com.goodsoft.customersservice.responses.GetCustomerByIdResponse;
+import com.goodsoft.customersservice.entities.Customer;
+
+import java.util.List;
 
 public interface ICustomersManager
 {
-    GetCustomerByIdResponse GetById(GetCustomerByIdRequest request);
+    List<Customer> GetById(Long customerId);
 }

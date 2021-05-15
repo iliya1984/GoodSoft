@@ -1,5 +1,7 @@
 package com.goodsoft.customersservice.configuration;
 
+import com.goodsoft.customersservice.logic.CustomersManager;
+import com.goodsoft.customersservice.logic.ICustomersManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -10,7 +12,14 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 @Configuration
-public class SpringFoxConfig {
+public class ApplicationConrfiguration {
+
+    @Bean
+    public ICustomersManager customersManager()
+    {
+        return new CustomersManager();
+    }
+
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
