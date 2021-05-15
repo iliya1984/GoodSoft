@@ -1,16 +1,16 @@
-package com.goodsoft.customersservice.logic;
+package com.goodsoft.customersservice.logic.requests.getcustomer;
 
+import an.awesome.pipelinr.Command;
 import com.goodsoft.customersservice.entities.Customer;
 import com.goodsoft.customersservice.entities.CustomerEmail;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class CustomersManager implements ICustomersManager
+public class GetCustomerRequestHandler implements Command.Handler<GetCustomerRequest, Customer>
 {
     @Override
-    public List<Customer> GetById(Long customerId) {
-
+    public Customer handle(GetCustomerRequest request)
+    {
         var customer = new Customer();
         customer.setFirstName("Iliya");
         customer.setLastName("Nahshan");
@@ -23,9 +23,6 @@ public class CustomersManager implements ICustomersManager
         emails.add(primaryEmail);
         customer.setEmails(emails);
 
-       var customers = new ArrayList<Customer>();
-       customers.add(customer);
-
-        return customers;
+        return customer;
     }
 }

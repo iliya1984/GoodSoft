@@ -1,23 +1,21 @@
 package com.goodsoft.customersservice.configuration;
 
-import com.goodsoft.customersservice.logic.CustomersManager;
-import com.goodsoft.customersservice.logic.ICustomersManager;
+import com.goodsoft.customersservice.logic.IPipelineFactory;
+import com.goodsoft.customersservice.logic.PipelineFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 @Configuration
 public class ApplicationConrfiguration {
 
     @Bean
-    public ICustomersManager customersManager()
+    public IPipelineFactory pipelineFactory()
     {
-        return new CustomersManager();
+            return new PipelineFactory();
     }
 
     @Bean
