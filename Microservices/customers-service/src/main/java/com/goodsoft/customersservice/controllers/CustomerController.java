@@ -4,10 +4,9 @@ import com.goodsoft.customersservice.entities.Customer;
 import com.goodsoft.customersservice.logic.IPipelineFactory;
 import com.goodsoft.customersservice.logic.requests.getcustomer.GetCustomerRequest;
 import com.goodsoft.customersservice.logic.requests.getcustomer.GetCustomerRequestHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.goodsoft.customersservice.logic.requests.createcustomer.CreateCustomerModel;
+import com.goodsoft.customersservice.logic.requests.createcustomer.CreateCustomerResultModel;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/customers")
@@ -30,5 +29,11 @@ public class CustomerController
         var customer = pipeline.send(request);
 
         return customer;
+    }
+
+    @PostMapping()
+    public CreateCustomerResultModel create(@RequestBody CreateCustomerModel model)
+    {
+        return null;
     }
 }
