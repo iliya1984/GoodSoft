@@ -1,7 +1,10 @@
 package com.goodsoft.customersservice.configuration;
 
+import br.com.fluentvalidator.AbstractValidator;
 import com.goodsoft.customersservice.logic.IPipelineFactory;
 import com.goodsoft.customersservice.logic.PipelineFactory;
+import com.goodsoft.customersservice.logic.requests.createcustomer.CreateCustomerRequest;
+import com.goodsoft.customersservice.logic.requests.createcustomer.CreateCustomerRequestValidator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -26,4 +29,11 @@ public class ApplicationConrfiguration {
                 .paths(PathSelectors.any())
                 .build();
     }
+
+    @Bean
+    public AbstractValidator<CreateCustomerRequest> createCustomerRequestValidator()
+    {
+        return new CreateCustomerRequestValidator();
+    }
+
 }
