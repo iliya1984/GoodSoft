@@ -3,9 +3,11 @@ package com.goodsoft.customersservice.logic.requests.getcustomer;
 import an.awesome.pipelinr.Command;
 import com.goodsoft.customersservice.entities.Customer;
 import com.goodsoft.customersservice.entities.CustomerEmail;
+import com.goodsoft.customersservice.logic.annotations.CustomerRequestHanlder;
 
 import java.util.ArrayList;
 
+@CustomerRequestHanlder()
 public class GetCustomerRequestHandler implements Command.Handler<GetCustomerRequest, Customer>
 {
     @Override

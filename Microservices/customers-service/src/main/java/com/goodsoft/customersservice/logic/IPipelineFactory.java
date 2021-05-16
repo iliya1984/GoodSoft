@@ -5,5 +5,5 @@ import an.awesome.pipelinr.Pipeline;
 
 public interface IPipelineFactory
 {
-    <R, C extends  Command<R>> Pipeline getPipeline(Command.Handler<C, R> requestHanlder);
+    <R, C extends  Command<R>> Pipeline getPipeline(String requestName);
 }
