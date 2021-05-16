@@ -2,6 +2,7 @@ package com.goodsoft.customersservice.controllers;
 
 import com.goodsoft.customersservice.entities.Customer;
 import com.goodsoft.customersservice.logic.IPipelineFactory;
+import com.goodsoft.customersservice.logic.requests.createcustomer.CreateCustomerRequest;
 import com.goodsoft.customersservice.logic.requests.getcustomer.GetCustomerRequest;
 import com.goodsoft.customersservice.logic.requests.getcustomer.GetCustomerRequestHandler;
 import com.goodsoft.customersservice.logic.requests.createcustomer.CreateCustomerModel;
@@ -34,6 +35,13 @@ public class CustomerController
     @PostMapping()
     public CreateCustomerResultModel create(@RequestBody CreateCustomerModel model)
     {
-        return null;
+        var request = new CreateCustomerRequest();
+        request.setModel(model);
+
+        var requestHandler = new GetCustomerRequestHandler();
+        var pipeline = _pipelineFactory.getPipeline(requestHandler);
+
+        var result = pipeline.send(request);
+        return result;
     }
 }

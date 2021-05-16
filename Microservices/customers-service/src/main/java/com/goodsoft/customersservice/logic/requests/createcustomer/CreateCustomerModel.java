@@ -9,8 +9,19 @@ import java.util.List;
 
 public class CreateCustomerModel
 {
-    public String firstName;
-    public String lastName;
-    public String email;
-    public String phone;
+    @Getter
+    @Setter
+    private String firstName;
+
+    @Getter
+    @Setter
+    private String lastName;
+
+    @Getter
+    @Setter
+    private String email;
+
+    @Getter
+    @Setter
+    private String phone;
 }
