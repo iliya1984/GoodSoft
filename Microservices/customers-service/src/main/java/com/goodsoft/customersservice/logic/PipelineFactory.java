@@ -12,10 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.ResolvableType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.support.GenericWebApplicationContext;
 
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.stream.Stream;
 
 public class PipelineFactory implements IPipelineFactory
@@ -25,24 +28,46 @@ public class PipelineFactory implements IPipelineFactory
 
     }
 
+    /*@Autowired
+    private ApplicationContext context;*/
+
     @Autowired
-    private ApplicationContext context;
+    private GenericWebApplicationContext context;
 
     @Bean
     @Override
-    public <R, C extends  Command<R>> Pipeline getPipeline(String requestName) throws IllegalArgumentException {
+    public <R, C extends  Command<R>> Pipeline getPipeline(C request) throws IllegalArgumentException {
 
         var beanNames = context.getBeanNamesForAnnotation(CustomerRequestHanlder.class);
-        var handlerName = requestName + "Handler";
+        var requestClass = request.getClass();
+        var requestName = requestClass.getSimpleName();
+        var handlerName = Utils.firstCharToLowerCase(requestName + "Handler");
 
         if(Arrays.stream(beanNames).anyMatch(bn -> bn.equals(handlerName)))
         {
-            var validator = new ValidationMiddleware<C>();
-            var requestHandler = (Command.Handler<C, R>)context.getBean(handlerName);
+            var pipeline = new Pipelinr();
 
-            var pipeline = new Pipelinr()
-                    .with(() -> Stream.of(validator))
-                    .with(() -> Stream.of(requestHandler) );
+            var genericType = ResolvableType.forClass(requestClass);
+            var validationMiddlewareType = ResolvableType.forClassWithGenerics(ValidationMiddleware.class, genericType);
+            var validationMiddlewareClass = validationMiddlewareType.toClass();
+            var validatorMiddlewareTypeNames = context.getBeanNamesForType(validationMiddlewareType);
+
+            if(validatorMiddlewareTypeNames.length == 0)
+            {
+                context.registerBean(validationMiddlewareClass, new ValidationMiddleware<C>());
+            }
+
+            validatorMiddlewareTypeNames = context.getBeanNamesForType(validationMiddlewareClass);
+            if(validatorMiddlewareTypeNames.length > 0)
+            {
+                var validatorMiddlewareName = validatorMiddlewareTypeNames[0];
+                var validationMiddleware = (ValidationMiddleware<C>)context.getBean(validatorMiddlewareName);
+                pipeline.with(() -> Stream.of(validationMiddleware));
+            }
+
+            var requestHandler = (Command.Handler<C, R>)context.getBean(handlerName);
+            pipeline.with(() -> Stream.of(requestHandler) );
+
             return pipeline;
         }
         else

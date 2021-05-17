@@ -1,7 +1,9 @@
 package com.goodsoft.customersservice;
 
+import an.awesome.pipelinr.Command;
 import com.goodsoft.customersservice.logic.IPipelineFactory;
 import com.goodsoft.customersservice.logic.PipelineFactory;
+import com.goodsoft.customersservice.logic.middlewares.ValidationMiddleware;
 import org.apache.naming.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;

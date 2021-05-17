@@ -27,7 +27,7 @@ public class CustomerController
         var request = new GetCustomerRequest();
         request.setCustomerId(id);
 
-        var pipeline = _pipelineFactory.getPipeline("getCustomerRequest");
+        var pipeline = _pipelineFactory.getPipeline(request);
         var customer = pipeline.send(request);
 
         return customer;
@@ -39,7 +39,7 @@ public class CustomerController
         var request = new CreateCustomerRequest();
         request.setModel(model);
 
-        var pipeline = _pipelineFactory.getPipeline("createCustomerRequest");
+        var pipeline = _pipelineFactory.getPipeline(request);
 
         var result = pipeline.send(request);
         return result;

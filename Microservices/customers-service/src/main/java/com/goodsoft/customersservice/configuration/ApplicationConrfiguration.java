@@ -24,11 +24,4 @@ public class ApplicationConrfiguration {
                 .paths(PathSelectors.any())
                 .build();
     }
-
-    @Bean
-    public AbstractValidator<CreateCustomerRequest> createCustomerRequestValidator()
-    {
-        return new CreateCustomerRequestValidator();
-    }
-
 }
