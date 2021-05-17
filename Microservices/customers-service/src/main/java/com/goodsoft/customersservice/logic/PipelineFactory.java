@@ -28,9 +28,6 @@ public class PipelineFactory implements IPipelineFactory
 
     }
 
-    /*@Autowired
-    private ApplicationContext context;*/
-
     @Autowired
     private GenericWebApplicationContext context;
 
@@ -47,21 +44,9 @@ public class PipelineFactory implements IPipelineFactory
         {
             var pipeline = new Pipelinr();
 
-            var genericType = ResolvableType.forClass(requestClass);
-            var validationMiddlewareType = ResolvableType.forClassWithGenerics(ValidationMiddleware.class, genericType);
-            var validationMiddlewareClass = validationMiddlewareType.toClass();
-            var validatorMiddlewareTypeNames = context.getBeanNamesForType(validationMiddlewareType);
-
-            if(validatorMiddlewareTypeNames.length == 0)
+            var validationMiddleware = createValidationMiddleware(request);
+            if(validationMiddleware != null)
             {
-                context.registerBean(validationMiddlewareClass, new ValidationMiddleware<C>());
-            }
-
-            validatorMiddlewareTypeNames = context.getBeanNamesForType(validationMiddlewareClass);
-            if(validatorMiddlewareTypeNames.length > 0)
-            {
-                var validatorMiddlewareName = validatorMiddlewareTypeNames[0];
-                var validationMiddleware = (ValidationMiddleware<C>)context.getBean(validatorMiddlewareName);
                 pipeline.with(() -> Stream.of(validationMiddleware));
             }
 
@@ -75,5 +60,28 @@ public class PipelineFactory implements IPipelineFactory
             String errorMessage = "Error occurred. Request handler for " + requestName + " was not found";
             throw new IllegalArgumentException(errorMessage);
         }
+    }
+
+    private <R, C extends  Command<R>> ValidationMiddleware<C> createValidationMiddleware(C request)
+    {
+        var requestClass = request.getClass();
+        var requestResolvableType = ResolvableType.forClass(requestClass);
+        var validationMiddlewareResolvableType = ResolvableType.forClassWithGenerics(ValidationMiddleware.class, requestResolvableType);
+        var validationMiddlewareClass = validationMiddlewareResolvableType.toClass();
+        var validatorMiddlewareTypeNames = context.getBeanNamesForType(validationMiddlewareResolvableType);
+
+        if(validatorMiddlewareTypeNames.length == 0)
+        {
+            context.registerBean(validationMiddlewareClass, new ValidationMiddleware<C>());
+        }
+
+        validatorMiddlewareTypeNames = context.getBeanNamesForType(validationMiddlewareClass);
+        if(validatorMiddlewareTypeNames.length > 0)
+        {
+            var validatorMiddlewareName = validatorMiddlewareTypeNames[0];
+            return  (ValidationMiddleware<C>)context.getBean(validatorMiddlewareName);
+        }
+
+        return null;
     }
 }
