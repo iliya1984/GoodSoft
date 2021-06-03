@@ -1,13 +1,9 @@
-package com.goodsoft.customersservice.logic.requests.createcustomer;
+package com.goodsoft.interfaces.customers.models;
 
-import com.goodsoft.customersservice.entities.CustomerEmail;
-import com.goodsoft.customersservice.entities.CustomerPhone;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
-public class CreateCustomerModel
+public class CreateCustomerRequest
 {
     @Getter
     @Setter
@@ -25,3 +21,4 @@ public class CreateCustomerModel
     @Setter
     private String phone;
 }
+

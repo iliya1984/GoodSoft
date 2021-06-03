@@ -5,18 +5,17 @@ import com.goodsoft.infra.mediator.annotations.RequestValidator;
 import org.apache.logging.log4j.util.Strings;
 
 import java.util.Objects;
-import java.util.function.Predicate;
 
 @RequestValidator
-public class CreateCustomerRequestValidator extends AbstractValidator<CreateCustomerRequest>
+public class CreateCustomerRequestValidator extends AbstractValidator<CreateCustomerCommand>
 {
     @Override
     public void rules()
     {
-        ruleFor(e -> e.getModel())
+        ruleFor(e -> e.getRequest())
                .must(Objects::nonNull);
 
-        ruleFor(e -> e.getModel().getFirstName())
+        ruleFor(e -> e.getRequest().getFirstName())
                 .must(Strings::isNotEmpty)
                 .withMessage("Customer first name validation error");
     }

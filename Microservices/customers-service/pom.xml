@@ -66,6 +66,11 @@
 			<artifactId>mediator</artifactId>
 			<version>1.0.1</version>
 		</dependency>
+		<dependency>
+			<groupId>com.goodsoft.interfaces.customers</groupId>
+			<artifactId>customers-interfaces</artifactId>
+			<version>1.0.2</version>
+		</dependency>
 	</dependencies>
 	<repositories>
 		<repository>

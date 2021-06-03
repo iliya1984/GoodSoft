@@ -1,9 +1,9 @@
 package com.goodsoft.customersservice.logic.requests.getcustomer;
 
 import an.awesome.pipelinr.Command;
-import com.goodsoft.customersservice.entities.Customer;
-import com.goodsoft.customersservice.entities.CustomerEmail;
 import com.goodsoft.infra.mediator.annotations.RequestHanlder;
+import com.goodsoft.interfaces.customers.entities.Customer;
+import com.goodsoft.interfaces.customers.entities.CustomerEmail;
 
 import java.util.ArrayList;
 

@@ -1,18 +1,19 @@
 package com.goodsoft.customersservice.controllers;
 
-import com.goodsoft.customersservice.entities.Customer;
-import com.goodsoft.customersservice.logic.requests.createcustomer.CreateCustomerRequest;
+import com.goodsoft.customersservice.logic.requests.createcustomer.CreateCustomerCommand;
 import com.goodsoft.customersservice.logic.requests.getcustomer.GetCustomerRequest;
-import com.goodsoft.customersservice.logic.requests.createcustomer.CreateCustomerModel;
-import com.goodsoft.customersservice.logic.requests.createcustomer.CreateCustomerResultModel;
 import com.goodsoft.infra.mediator.factory.IPipelineFactory;
+import com.goodsoft.interfaces.customers.ICustomersService;
+import com.goodsoft.interfaces.customers.models.CreateCustomerRequest;
+import com.goodsoft.interfaces.customers.models.CreateCustomerResponse;
+import com.goodsoft.interfaces.customers.models.GetCustomerResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/customers")
-public class CustomerController
+public class CustomerController implements ICustomersService
 {
     private IPipelineFactory _pipelineFactory;
 
@@ -22,7 +23,7 @@ public class CustomerController
     }
 
     @GetMapping(value = "/{id}")
-    public Customer findById(@PathVariable("id") Long id) {
+    public GetCustomerResponse findById(@PathVariable("id") Long id) {
 
         var request = new GetCustomerRequest();
         request.setCustomerId(id);
@@ -30,21 +31,30 @@ public class CustomerController
         var pipeline = _pipelineFactory.getPipeline(request);
         var customer = pipeline.send(request);
 
-        return customer;
+        var response  = new GetCustomerResponse();
+        response.setCustomer(customer);
+
+        return response;
     }
 
     @PostMapping()
-    public ResponseEntity<CreateCustomerResultModel> create(@RequestBody CreateCustomerModel model)
+    public ResponseEntity<CreateCustomerResponse> create(@RequestBody CreateCustomerRequest model)
     {
         try
         {
-            var request = new CreateCustomerRequest();
-            request.setModel(model);
+            var request = new CreateCustomerCommand();
+            request.setRequest(model);
 
             var pipeline = _pipelineFactory.getPipeline(request);
 
-            var result = pipeline.send(request);
-            return new ResponseEntity<>(result, HttpStatus.OK);
+            var customer = pipeline.send(request);
+
+            var response = new CreateCustomerResponse();
+
+            //TODO: set customer
+            //response.setCustomer(customer);
+
+            return new ResponseEntity<CreateCustomerResponse>(response, HttpStatus.OK);
 
         }
         catch(Exception ex)
