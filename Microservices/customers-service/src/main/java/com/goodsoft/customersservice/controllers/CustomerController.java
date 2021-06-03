@@ -50,7 +50,7 @@ public class CustomerController
         catch(Exception ex)
         {
             var exceptionName = ex.getClass().getSimpleName();
-            if(exceptionName.equals("CustomerValidationException"))
+            if(exceptionName.equals("ValidationException"))
             {
                 return new ResponseEntity<>(null, HttpStatus.UNPROCESSABLE_ENTITY);
             }
