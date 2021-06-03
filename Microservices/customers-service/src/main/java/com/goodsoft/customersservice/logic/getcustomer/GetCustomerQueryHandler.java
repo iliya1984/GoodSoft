@@ -1,4 +1,4 @@
-package com.goodsoft.customersservice.logic.requests.getcustomer;
+package com.goodsoft.customersservice.logic.getcustomer;
 
 import an.awesome.pipelinr.Command;
 import com.goodsoft.infra.mediator.annotations.RequestHanlder;
@@ -8,10 +8,10 @@ import com.goodsoft.interfaces.customers.entities.CustomerEmail;
 import java.util.ArrayList;
 
 @RequestHanlder()
-public class GetCustomerRequestHandler implements Command.Handler<GetCustomerRequest, Customer>
+public class GetCustomerQueryHandler implements Command.Handler<GetCustomerQuery, Customer>
 {
     @Override
-    public Customer handle(GetCustomerRequest request)
+    public Customer handle(GetCustomerQuery request)
     {
         var customer = new Customer();
         customer.setFirstName("Iliya");

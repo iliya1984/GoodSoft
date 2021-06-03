@@ -1,7 +1,7 @@
 package com.goodsoft.customersservice.controllers;
 
-import com.goodsoft.customersservice.logic.requests.createcustomer.CreateCustomerCommand;
-import com.goodsoft.customersservice.logic.requests.getcustomer.GetCustomerRequest;
+import com.goodsoft.customersservice.logic.createcustomer.CreateCustomerCommand;
+import com.goodsoft.customersservice.logic.getcustomer.GetCustomerQuery;
 import com.goodsoft.infra.mediator.factory.IPipelineFactory;
 import com.goodsoft.interfaces.customers.ICustomersService;
 import com.goodsoft.interfaces.customers.models.CreateCustomerRequest;
@@ -25,7 +25,7 @@ public class CustomerController implements ICustomersService
     @GetMapping(value = "/{id}")
     public GetCustomerResponse findById(@PathVariable("id") Long id) {
 
-        var request = new GetCustomerRequest();
+        var request = new GetCustomerQuery();
         request.setCustomerId(id);
 
         var pipeline = _pipelineFactory.getPipeline(request);

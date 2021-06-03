@@ -1,4 +1,4 @@
-package com.goodsoft.customersservice.logic.requests.createcustomer;
+package com.goodsoft.customersservice.logic.createcustomer;
 
 import br.com.fluentvalidator.AbstractValidator;
 import com.goodsoft.infra.mediator.annotations.RequestValidator;
@@ -7,7 +7,7 @@ import org.apache.logging.log4j.util.Strings;
 import java.util.Objects;
 
 @RequestValidator
-public class CreateCustomerRequestValidator extends AbstractValidator<CreateCustomerCommand>
+public class CreateCustomerCommandValidator extends AbstractValidator<CreateCustomerCommand>
 {
     @Override
     public void rules()

@@ -1,4 +1,4 @@
-package com.goodsoft.customersservice.logic.requests.createcustomer;
+package com.goodsoft.customersservice.logic.createcustomer;
 
 import an.awesome.pipelinr.Command;
 import com.goodsoft.interfaces.customers.entities.Customer;
