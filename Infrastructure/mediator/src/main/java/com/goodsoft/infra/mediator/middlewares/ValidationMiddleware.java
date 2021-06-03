@@ -1,12 +1,11 @@
-package com.goodsoft.customersservice.logic.middlewares;
+package com.goodsoft.infra.mediator.middlewares;
 
 import an.awesome.pipelinr.Command;
 import an.awesome.pipelinr.Pipelinr;
 import br.com.fluentvalidator.AbstractValidator;
-import br.com.fluentvalidator.exception.ValidationException;
-import com.goodsoft.customersservice.logic.Utils;
-import com.goodsoft.customersservice.logic.annotations.CustomerRequestValidator;
-import com.goodsoft.customersservice.logic.errorhandling.CustomerValidationException;
+import com.goodsoft.infra.mediator.annotations.RequestValidator;
+import com.goodsoft.infra.mediator.errorhandling.ValidationException;
+import com.goodsoft.infra.mediator.utils.Utils;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -30,7 +29,7 @@ public class ValidationMiddleware<C> implements Command.Middleware
         var requestName = requestClass.getSimpleName();
         var validatorName = Utils.firstCharToLowerCase(requestName + "Validator");
 
-        var beanNames = context.getBeanNamesForAnnotation(CustomerRequestValidator.class);
+        var beanNames = context.getBeanNamesForAnnotation(RequestValidator.class);
 
         if(Arrays.stream(beanNames).anyMatch(bn -> bn.equals(validatorName)))
         {
@@ -40,7 +39,7 @@ public class ValidationMiddleware<C> implements Command.Middleware
             if(false == validationResult.isValid())
             {
                 String validationError = "Validation for" + requestName + " request failed";
-                throw new CustomerValidationException(validationError);
+                throw new ValidationException(validationError);
             }
         }
 
@@ -48,3 +47,4 @@ public class ValidationMiddleware<C> implements Command.Middleware
         return response;
     }
 }
+

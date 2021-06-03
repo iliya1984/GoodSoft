@@ -1,17 +1,9 @@
 package com.goodsoft.customersservice;
-
-import an.awesome.pipelinr.Command;
-import com.goodsoft.customersservice.logic.IPipelineFactory;
-import com.goodsoft.customersservice.logic.PipelineFactory;
-import com.goodsoft.customersservice.logic.middlewares.ValidationMiddleware;
-import org.apache.naming.factory.BeanFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.goodsoft.infra.mediator.factory.IPipelineFactory;
+import com.goodsoft.infra.mediator.factory.PipelineFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Service;
 
 @SpringBootApplication
 public class CustomersServiceApplication {

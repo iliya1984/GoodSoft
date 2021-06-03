@@ -1,4 +1,4 @@
-package com.goodsoft.customersservice.logic;
+package com.goodsoft.infra.mediator.factory;
 
 import an.awesome.pipelinr.Command;
 import an.awesome.pipelinr.Pipeline;

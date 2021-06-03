@@ -1,14 +1,13 @@
-package com.goodsoft.customersservice.logic.annotations;
+package com.goodsoft.infra.mediator.annotations;
 
 import org.springframework.stereotype.Component;
-
 import java.lang.annotation.*;
 
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Component
-public @interface CustomerRequestValidator
+public @interface RequestValidator
 {
 
 }

@@ -14,10 +14,40 @@
             <artifactId>spring-boot-starter-web</artifactId>
             <version>2.4.5</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.20</version>
+        </dependency>
+        <dependency>
+            <groupId>an.awesome</groupId>
+            <artifactId>pipelinr</artifactId>
+            <version>0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.mvallim</groupId>
+            <artifactId>java-fluent-validator</artifactId>
+            <version>1.9.3</version>
+        </dependency>
     </dependencies>
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
     </properties>
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>bintray</name>
+            <url>https://jcenter.bintray.com</url>
+        </repository>
+        <repository>
+            <id>sonatype-snapshots</id>
+            <name>Sonatype Snapshots</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
 </project>

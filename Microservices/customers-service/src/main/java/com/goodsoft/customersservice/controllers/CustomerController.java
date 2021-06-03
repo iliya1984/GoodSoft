@@ -1,14 +1,11 @@
 package com.goodsoft.customersservice.controllers;
 
 import com.goodsoft.customersservice.entities.Customer;
-import com.goodsoft.customersservice.logic.IPipelineFactory;
-import com.goodsoft.customersservice.logic.errorhandling.CustomerValidationException;
 import com.goodsoft.customersservice.logic.requests.createcustomer.CreateCustomerRequest;
-import com.goodsoft.customersservice.logic.requests.createcustomer.CreateCustomerRequestHandler;
 import com.goodsoft.customersservice.logic.requests.getcustomer.GetCustomerRequest;
-import com.goodsoft.customersservice.logic.requests.getcustomer.GetCustomerRequestHandler;
 import com.goodsoft.customersservice.logic.requests.createcustomer.CreateCustomerModel;
 import com.goodsoft.customersservice.logic.requests.createcustomer.CreateCustomerResultModel;
+import com.goodsoft.infra.mediator.factory.IPipelineFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package com.goodsoft.customersservice.logic;
+package com.goodsoft.infra.mediator.utils;
 
 public class Utils
 {

@@ -1,10 +1,12 @@
-package com.goodsoft.customersservice.logic;
+package com.goodsoft.infra.mediator.factory;
+
 
 import an.awesome.pipelinr.Command;
 import an.awesome.pipelinr.Pipeline;
 import an.awesome.pipelinr.Pipelinr;
-import com.goodsoft.customersservice.logic.middlewares.ValidationMiddleware;
 import com.goodsoft.infra.mediator.annotations.RequestHanlder;
+import com.goodsoft.infra.mediator.middlewares.ValidationMiddleware;
+import com.goodsoft.infra.mediator.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.ResolvableType;
@@ -60,19 +62,21 @@ public class PipelineFactory implements IPipelineFactory
         var requestClass = request.getClass();
         var requestResolvableType = ResolvableType.forClass(requestClass);
         var validationMiddlewareResolvableType = ResolvableType.forClassWithGenerics(ValidationMiddleware.class, requestResolvableType);
+
         var validationMiddlewareClass = validationMiddlewareResolvableType.toClass();
         var validatorMiddlewareTypeNames = context.getBeanNamesForType(validationMiddlewareResolvableType);
 
         if(validatorMiddlewareTypeNames.length == 0)
         {
-            context.registerBean(validationMiddlewareClass, new ValidationMiddleware<C>());
+            context.registerBean(validationMiddlewareClass);
         }
 
         validatorMiddlewareTypeNames = context.getBeanNamesForType(validationMiddlewareClass);
         if(validatorMiddlewareTypeNames.length > 0)
         {
             var validatorMiddlewareName = validatorMiddlewareTypeNames[0];
-            return  (ValidationMiddleware<C>)context.getBean(validatorMiddlewareName);
+            var bean =  context.getBean(validationMiddlewareClass);
+            return (ValidationMiddleware<C>)bean;
         }
 
         return null;
