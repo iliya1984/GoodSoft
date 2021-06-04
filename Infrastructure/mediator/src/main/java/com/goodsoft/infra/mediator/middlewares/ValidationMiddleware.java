@@ -39,7 +39,7 @@ public class ValidationMiddleware<C> implements Command.Middleware
             if(false == validationResult.isValid())
             {
                 String validationError = "Validation for" + requestName + " request failed";
-                throw new ValidationException(validationError);
+                throw new ValidationException(validationError, validationResult.getErrors());
             }
         }
 

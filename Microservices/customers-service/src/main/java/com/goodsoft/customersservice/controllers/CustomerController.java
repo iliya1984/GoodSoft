@@ -2,6 +2,7 @@ package com.goodsoft.customersservice.controllers;
 
 import com.goodsoft.customersservice.logic.createcustomer.CreateCustomerCommand;
 import com.goodsoft.customersservice.logic.getcustomer.GetCustomerQuery;
+import com.goodsoft.infra.mediator.errorhandling.ValidationException;
 import com.goodsoft.infra.mediator.factory.IPipelineFactory;
 import com.goodsoft.interfaces.customers.ICustomersService;
 import com.goodsoft.interfaces.customers.models.CreateCustomerRequest;
@@ -10,6 +11,8 @@ import com.goodsoft.interfaces.customers.models.GetCustomerResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/customers")
@@ -62,7 +65,8 @@ public class CustomerController implements ICustomersService
             var exceptionName = ex.getClass().getSimpleName();
             if(exceptionName.equals("ValidationException"))
             {
-                return new ResponseEntity<>(null, HttpStatus.UNPROCESSABLE_ENTITY);
+                var validationException = (ValidationException)ex;
+                return new ResponseEntity<Collection<Error>>(validationException.getErrors(), HttpStatus.UNPROCESSABLE_ENTITY);
             }
             else
             {
