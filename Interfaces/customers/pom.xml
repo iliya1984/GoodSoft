@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.goodsoft.interfaces.customers</groupId>
-    <artifactId>customers-interfaces</artifactId>
-    <version>1.0.2</version>
+    <artifactId>customers</artifactId>
+    <version>1.0.4</version>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -19,9 +19,5 @@
             <version>1.18.20</version>
         </dependency>
     </dependencies>
-    <properties>
-        <maven.compiler.source>16</maven.compiler.source>
-        <maven.compiler.target>16</maven.compiler.target>
-    </properties>
 
 </project>

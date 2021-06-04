@@ -1,4 +1,4 @@
-package com.goodsoft.interfaces.customers.models;
+package com.goodsoft.interfaces.customers.requestresponse;
 
 import lombok.Getter;
 import lombok.Setter;

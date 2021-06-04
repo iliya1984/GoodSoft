@@ -1,10 +1,9 @@
-package com.goodsoft.interfaces.customers.models;
+package com.goodsoft.interfaces.customers.requestresponse;
 
 import com.goodsoft.interfaces.customers.entities.Customer;
 import lombok.Getter;
 import lombok.Setter;
-
-public class GetCustomerResponse
+public class GetCustomerResponse extends CustomersServiceResponse
 {
     @Getter
     @Setter

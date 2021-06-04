@@ -5,14 +5,18 @@ import com.goodsoft.customersservice.logic.getcustomer.GetCustomerQuery;
 import com.goodsoft.infra.mediator.errorhandling.ValidationException;
 import com.goodsoft.infra.mediator.factory.IPipelineFactory;
 import com.goodsoft.interfaces.customers.ICustomersService;
-import com.goodsoft.interfaces.customers.models.CreateCustomerRequest;
-import com.goodsoft.interfaces.customers.models.CreateCustomerResponse;
-import com.goodsoft.interfaces.customers.models.GetCustomerResponse;
+import com.goodsoft.interfaces.customers.errorhandling.CustomersValidationError;
+import com.goodsoft.interfaces.customers.requestresponse.CreateCustomerRequest;
+import com.goodsoft.interfaces.customers.requestresponse.CreateCustomerResponse;
+import com.goodsoft.interfaces.customers.requestresponse.GetCustomerResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/customers")
@@ -66,7 +70,21 @@ public class CustomerController implements ICustomersService
             if(exceptionName.equals("ValidationException"))
             {
                 var validationException = (ValidationException)ex;
-                return new ResponseEntity<Collection<Error>>(validationException.getErrors(), HttpStatus.UNPROCESSABLE_ENTITY);
+
+                var invalidResponse = new CreateCustomerResponse();
+                var errors = new ArrayList<CustomersValidationError>();
+                validationException.getErrors().forEach(e ->
+                {
+                    var error = new CustomersValidationError();
+                    error.setErrorMessage(e.getMessage());
+                    error.setErrorCode(e.getCode());
+                    errors.add(error);
+                });
+
+                invalidResponse.setValidationErrors(errors);
+
+
+                return new ResponseEntity(invalidResponse, HttpStatus.UNPROCESSABLE_ENTITY);
             }
             else
             {

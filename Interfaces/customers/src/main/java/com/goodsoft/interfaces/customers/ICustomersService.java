@@ -1,8 +1,8 @@
 package com.goodsoft.interfaces.customers;
 
-import com.goodsoft.interfaces.customers.models.CreateCustomerRequest;
-import com.goodsoft.interfaces.customers.models.CreateCustomerResponse;
-import com.goodsoft.interfaces.customers.models.GetCustomerResponse;
+import com.goodsoft.interfaces.customers.requestresponse.CreateCustomerRequest;
+import com.goodsoft.interfaces.customers.requestresponse.CreateCustomerResponse;
+import com.goodsoft.interfaces.customers.requestresponse.GetCustomerResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;

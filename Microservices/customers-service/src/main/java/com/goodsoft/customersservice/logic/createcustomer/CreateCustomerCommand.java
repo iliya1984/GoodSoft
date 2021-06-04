@@ -2,7 +2,7 @@ package com.goodsoft.customersservice.logic.createcustomer;
 
 import an.awesome.pipelinr.Command;
 import com.goodsoft.interfaces.customers.entities.Customer;
-import com.goodsoft.interfaces.customers.models.CreateCustomerRequest;
+import com.goodsoft.interfaces.customers.requestresponse.CreateCustomerRequest;
 import lombok.Getter;
 import lombok.Setter;
 
