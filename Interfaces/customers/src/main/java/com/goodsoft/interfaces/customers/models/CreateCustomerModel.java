@@ -1,9 +1,9 @@
-package com.goodsoft.interfaces.customers.requestresponse;
+package com.goodsoft.interfaces.customers.models;
 
 import lombok.Getter;
 import lombok.Setter;
 
-public class CreateCustomerRequest
+public class CreateCustomerModel
 {
     @Getter
     @Setter

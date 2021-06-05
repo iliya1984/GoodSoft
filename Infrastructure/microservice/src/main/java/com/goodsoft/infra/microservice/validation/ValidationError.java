@@ -1,9 +1,9 @@
-package com.goodsoft.interfaces.customers.errorhandling;
+package com.goodsoft.infra.microservice.validation;
 
 import lombok.Getter;
 import lombok.Setter;
 
-public class CustomersValidationError
+public class ValidationError
 {
     @Getter
     @Setter

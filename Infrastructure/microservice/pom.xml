@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.goodsoft.interfaces.customers</groupId>
-    <artifactId>customers</artifactId>
-    <version>1.0.5</version>
+    <groupId>com.goodsoft.infra.microservice</groupId>
+    <artifactId>microservice</artifactId>
+    <version>1.0.1</version>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -18,10 +18,14 @@
             <artifactId>lombok</artifactId>
             <version>1.18.20</version>
         </dependency>
+        <dependency>
+            <groupId>com.goodsoft.infra.mediator</groupId>
+            <artifactId>mediator</artifactId>
+            <version>1.0.2</version>
+        </dependency>
     </dependencies>
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
     </properties>
-
 </project>

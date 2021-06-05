@@ -4,10 +4,10 @@ import com.goodsoft.customersservice.logic.createcustomer.CreateCustomerCommand;
 import com.goodsoft.customersservice.logic.getcustomer.GetCustomerQuery;
 import com.goodsoft.infra.mediator.errorhandling.ValidationException;
 import com.goodsoft.infra.mediator.factory.IPipelineFactory;
-import com.goodsoft.interfaces.customers.errorhandling.CustomersValidationError;
-import com.goodsoft.interfaces.customers.requestresponse.CreateCustomerRequest;
-import com.goodsoft.interfaces.customers.requestresponse.CreateCustomerResponse;
-import com.goodsoft.interfaces.customers.requestresponse.GetCustomerResponse;
+import com.goodsoft.infra.microservice.RestService;
+import com.goodsoft.interfaces.customers.ICustomersService;
+import com.goodsoft.interfaces.customers.models.CreateCustomerModel;
+import com.goodsoft.interfaces.customers.models.GetCustomerResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/customers")
-public class CustomerController //implements ICustomersService
+public class CustomerController extends RestService implements ICustomersService
 {
     private IPipelineFactory _pipelineFactory;
 
@@ -42,12 +42,12 @@ public class CustomerController //implements ICustomersService
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> create(@RequestBody CreateCustomerRequest model)
+    public ResponseEntity<?> create(@RequestBody CreateCustomerModel model)
     {
         try
         {
             var request = new CreateCustomerCommand();
-            request.setRequest(model);
+            request.setModel(model);
 
             var pipeline = _pipelineFactory.getPipeline(request);
             var customer = pipeline.send(request);
@@ -57,33 +57,6 @@ public class CustomerController //implements ICustomersService
         catch(Exception ex)
         {
             return exceptionResponse(ex);
-        }
-    }
-
-    private  ResponseEntity<?> exceptionResponse(Exception ex)
-    {
-        var exceptionName = ex.getClass().getSimpleName();
-        if(exceptionName.equals("ValidationException"))
-        {
-            var validationException = (ValidationException)ex;
-
-            var invalidResponse = new CreateCustomerResponse();
-            var errors = new ArrayList<CustomersValidationError>();
-            validationException.getErrors().forEach(e ->
-            {
-                var error = new CustomersValidationError();
-                error.setErrorMessage(e.getMessage());
-                error.setErrorCode(e.getCode());
-                errors.add(error);
-            });
-
-            invalidResponse.setValidationErrors(errors);
-
-            return new ResponseEntity(invalidResponse, HttpStatus.UNPROCESSABLE_ENTITY);
-        }
-        else
-        {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

@@ -12,10 +12,10 @@ public class CreateCustomerCommandValidator extends AbstractValidator<CreateCust
     @Override
     public void rules()
     {
-        ruleFor(e -> e.getRequest())
+        ruleFor(e -> e.getModel())
                .must(Objects::nonNull);
 
-        ruleFor(e -> e.getRequest().getFirstName())
+        ruleFor(e -> e.getModel().getFirstName())
                 .must(Strings::isNotEmpty)
                 .withMessage("Customer first name validation error");
     }

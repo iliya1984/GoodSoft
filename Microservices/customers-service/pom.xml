@@ -67,9 +67,14 @@
 			<version>1.0.2</version>
 		</dependency>
 		<dependency>
+			<groupId>com.goodsoft.infra.microservice</groupId>
+			<artifactId>microservice</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
 			<groupId>com.goodsoft.interfaces.customers</groupId>
 			<artifactId>customers</artifactId>
-			<version>1.0.4</version>
+			<version>1.0.5</version>
 		</dependency>
 	</dependencies>
 	<repositories>
