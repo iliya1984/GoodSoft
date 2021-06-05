@@ -5,5 +5,5 @@ import java.util.Objects;
 
 public interface IConfigurationServiceManager
 {
-    Objects getMicroserviceConfiguration(String serviceName);
+    Object getMicroserviceConfiguration(String serviceName);
 }
