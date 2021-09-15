@@ -7,6 +7,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
 
+import javax.print.Doc;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -15,13 +16,15 @@ public class ConfigurationServiceManager implements IConfigurationServiceManager
     @Override
     public ConfigurationSection getMicroserviceConfiguration(String serviceName) {
 
-        var connString = new ConnectionString(
+        var connectionString = new ConnectionString(
                 "mongodb://localhost:27017/?authSource=admin"
         );
+
         var settings = MongoClientSettings.builder()
-                .applyConnectionString(connString)
+                .applyConnectionString(connectionString)
                 .retryWrites(true)
                 .build();
+
         var mongoClient = MongoClients.create(settings);
         var database = mongoClient.getDatabase("configuration");
 
@@ -33,9 +36,9 @@ public class ConfigurationServiceManager implements IConfigurationServiceManager
            var document = documents.first();
            if(document != null)
            {
-               var id = document.getObjectId("_id");
                var name = document.getString("name");
-               var value = document.get("value").toString();
+               var valueDocument = (Document)document.get("value");
+               var value = valueDocument.toJson();
 
                var section = new ConfigurationSection();
                section.setName(name);
