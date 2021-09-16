@@ -1,4 +1,6 @@
 package com.goodsoft.customersservice;
+import com.goodsoft.customersservice.configuration.ConfigurationManager;
+import com.goodsoft.customersservice.configuration.IConfigurationManager;
 import com.goodsoft.infra.mediator.factory.IPipelineFactory;
 import com.goodsoft.infra.mediator.factory.PipelineFactory;
 import org.springframework.boot.SpringApplication;
@@ -18,4 +20,7 @@ public class CustomersServiceApplication {
 	{
 		return new PipelineFactory();
 	}
+
+	@Bean
+	public IConfigurationManager configurationManager(){ return new ConfigurationManager(); }
 }
