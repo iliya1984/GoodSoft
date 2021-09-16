@@ -19,12 +19,12 @@ public class ConfigurationController
     }
 
     @GetMapping
-    @RequestMapping("/microservices/{serviceName}")
-    public ResponseEntity<Object> getMicroserviceConfiguration(@PathVariable("serviceName")String serviceName)
+    @RequestMapping("/domains/{domainName}")
+    public ResponseEntity<Object> getDomainConfiguration(@PathVariable("domainName")String domainName)
     {
         try
         {
-            var configuration = _manager.getMicroserviceConfiguration(serviceName);
+            var configuration = _manager.getMicroserviceConfiguration(domainName);
             return ResponseEntity.ok(configuration);
         }
         catch (Exception ex)

@@ -1,11 +1,8 @@
 package com.goodsoft.configurationservice.logic;
 
-import com.goodsoft.configurationservice.entities.ConfigurationSection;
-
-import java.util.HashMap;
-import java.util.Objects;
+import com.goodsoft.configurationservice.entities.DomainConfiguration;
 
 public interface IConfigurationServiceManager
 {
-    ConfigurationSection getMicroserviceConfiguration(String serviceName);
+    DomainConfiguration getMicroserviceConfiguration(String serviceName);
 }

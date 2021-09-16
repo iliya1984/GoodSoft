@@ -6,11 +6,11 @@ import org.bson.types.ObjectId;
 
 import java.util.UUID;
 
-public class ConfigurationSection
+public class DomainConfiguration
 {
     @Getter
     @Setter
-    private String name;
+    private String domainName;
 
     @Getter
     @Setter
