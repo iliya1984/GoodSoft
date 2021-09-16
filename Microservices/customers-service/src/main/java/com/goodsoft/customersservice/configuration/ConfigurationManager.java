@@ -21,8 +21,8 @@ public class ConfigurationManager implements IConfigurationManager
         if(_section == null)
         {
             var baseUrl = _environment.getProperty("configuration-service-baseurl");
-            var microserviceName = _environment.getProperty("microservice.name");
-            var uri = "/microservices/" + microserviceName;
+            var domainName = _environment.getProperty("domain.name");
+            var uri = "/domains/" + domainName;
 
             var client = WebClient.create(baseUrl);
 

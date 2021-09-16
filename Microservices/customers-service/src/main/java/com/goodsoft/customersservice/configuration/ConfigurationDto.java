@@ -2,17 +2,17 @@ package com.goodsoft.customersservice.configuration;
 
 public class ConfigurationDto
 {
-    private  String _name;
+    private  String _domainName;
     private  String _value;
 
-    public String getName()
+    public String getDomainName()
     {
-        return _name;
+        return _domainName;
     }
 
-    public void setName(String value)
+    public void setDomainName(String value)
     {
-        _name = value;
+        _domainName = value;
     }
 
     public String getValue()
