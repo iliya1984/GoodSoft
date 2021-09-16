@@ -2,6 +2,8 @@ package com.goodsoft.customersservice.configuration;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -10,18 +12,27 @@ public class ConfigurationManager implements IConfigurationManager
 {
     private ConfigurationSection _section;
 
+    @Autowired
+    private Environment _environment;
 
     @Override
-    public ConfigurationSection GetConfiguration()  {
+    public ConfigurationSection GetConfiguration()
+    {
         if(_section == null)
         {
-            var client = WebClient.create("http://configuration.goodsoft.com:8081");
+            var baseUrl = _environment.getProperty("configuration-service-baseurl");
+            var microserviceName = _environment.getProperty("microservice.name");
+            var uri = "/microservices/" + microserviceName;
+
+            var client = WebClient.create(baseUrl);
 
             var headerSpec = client.get();
-            headerSpec.uri("/microservices/customersservice");
-            Mono<ConfigurationDto> monoResponse = headerSpec.exchangeToMono(response -> {
+            headerSpec.uri(uri);
 
-                if (response.statusCode().equals(HttpStatus.OK)) {
+            var monoResponse = headerSpec.exchangeToMono(response ->
+            {
+                if (response.statusCode().equals(HttpStatus.OK))
+                {
                     return response.bodyToMono(ConfigurationDto.class);
                 }
                 else
