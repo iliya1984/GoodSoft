@@ -4,6 +4,7 @@ import an.awesome.pipelinr.Command;
 import com.goodsoft.infra.mediator.annotations.RequestHanlder;
 import com.goodsoft.interfaces.customers.entities.Customer;
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,7 +29,7 @@ public class CreateCustomerCommandHandler implements Command.Handler<CreateCusto
 
         var exchange = "customers";
         var routingKey = "contomer.created.event";
-
+        
         _rabbitTemplate.convertAndSend(exchange, routingKey, customer);
 
         return customer;
