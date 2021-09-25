@@ -1,7 +1,7 @@
 package com.goodsoft.customersservice.logic.getcustomer;
 
 import an.awesome.pipelinr.Command;
-import com.goodsoft.customersservice.configuration.ConfigurationSection;
+import com.goodsoft.customersservice.configuration.CustomerServiceConfiguration;
 import com.goodsoft.customersservice.configuration.IConfigurationManager;
 import com.goodsoft.infra.mediator.annotations.RequestHanlder;
 import com.goodsoft.interfaces.customers.entities.Customer;
@@ -12,11 +12,11 @@ import java.util.ArrayList;
 @RequestHanlder()
 public class GetCustomerQueryHandler implements Command.Handler<GetCustomerQuery, Customer>
 {
-    private ConfigurationSection _config;
+    private CustomerServiceConfiguration _config;
 
-    public GetCustomerQueryHandler(IConfigurationManager configurationManager)
+    public GetCustomerQueryHandler(CustomerServiceConfiguration configuration)
     {
-        _config = configurationManager.GetConfiguration();
+        _config = configuration;
     }
     @Override
     public Customer handle(GetCustomerQuery request)

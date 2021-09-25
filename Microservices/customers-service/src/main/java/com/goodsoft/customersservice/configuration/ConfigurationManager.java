@@ -10,19 +10,20 @@ import reactor.core.publisher.Mono;
 
 public class ConfigurationManager implements IConfigurationManager
 {
-    private ConfigurationSection _section;
+    private CustomerServiceConfiguration _section;
 
     @Autowired
     private Environment _environment;
 
     @Override
-    public ConfigurationSection GetConfiguration()
+    public CustomerServiceConfiguration GetConfiguration()
     {
         if(_section == null)
         {
             var baseUrl = _environment.getProperty("configuration-service-baseurl");
             var domainName = _environment.getProperty("domain.name");
-            var uri = "/domains/" + domainName;
+            var key = _environment.getProperty("configuration.key");
+            var uri = "/domains/" + domainName + "/" + key;
 
             var client = WebClient.create(baseUrl);
 
@@ -49,11 +50,12 @@ public class ConfigurationManager implements IConfigurationManager
                 {
                     var value = configurationDto.getValue();
                     var objectMapper = new ObjectMapper();
-                    var section = objectMapper.readValue(value, ConfigurationSection.class);
+                    var section = objectMapper.readValue(value, CustomerServiceConfiguration.class);
                     _section = section;
                 }
                 catch(JsonProcessingException ex)
                 {
+                    int i = 1;
                    //TODO: Log error
                 }
             }

@@ -4,6 +4,11 @@ public class ConfigurationDto
 {
     private  String _domainName;
     private  String _value;
+    private  String _key;
+
+    public String getKey(){ return  _key; }
+
+    public void setKey(String value){ _key = value;}
 
     public String getDomainName()
     {

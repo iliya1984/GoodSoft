@@ -1,8 +1,9 @@
 package com.goodsoft.configurationservice.logic;
 
-import com.goodsoft.configurationservice.entities.DomainConfiguration;
+import com.goodsoft.configurationservice.dtos.DomainConfiguration;
+import com.goodsoft.configurationservice.dtos.DomainConfigurationRequest;
 
 public interface IConfigurationServiceManager
 {
-    DomainConfiguration getMicroserviceConfiguration(String serviceName);
+    DomainConfiguration getDomainConfiguration(DomainConfigurationRequest request);
 }

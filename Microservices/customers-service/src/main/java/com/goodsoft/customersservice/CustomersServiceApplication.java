@@ -1,5 +1,6 @@
 package com.goodsoft.customersservice;
 import com.goodsoft.customersservice.configuration.ConfigurationManager;
+import com.goodsoft.customersservice.configuration.CustomerServiceConfiguration;
 import com.goodsoft.customersservice.configuration.IConfigurationManager;
 import com.goodsoft.infra.mediator.factory.IPipelineFactory;
 import com.goodsoft.infra.mediator.factory.PipelineFactory;
@@ -23,4 +24,10 @@ public class CustomersServiceApplication {
 
 	@Bean
 	public IConfigurationManager configurationManager(){ return new ConfigurationManager(); }
+
+	@Bean
+	public CustomerServiceConfiguration configuration(IConfigurationManager configurationManager)
+	{
+		return configurationManager.GetConfiguration();
+	}
 }

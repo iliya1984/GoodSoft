@@ -15,7 +15,7 @@ import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
 @Component
-public class CustomerCreatedEventReceiver //implements MessageListener
+public class CustomerCreatedEventReceiver
 {
     private CountDownLatch latch = new CountDownLatch(1);
 
@@ -31,26 +31,4 @@ public class CustomerCreatedEventReceiver //implements MessageListener
     public CountDownLatch getLatch() {
         return latch;
     }
-
-    /*public void onMessage(Message message)
-    {
-        var messageJson = message.toString();
-        var messageBody = message.getBody();
-        var messageBodyJson =  DatatypeConverter.printBase64Binary(messageBody);
-
-        var mapper = new ObjectMapper();
-        try
-        {
-            var customer = mapper.readValue(messageBody, CustomerEntry.class);
-
-            var i = 1;
-        }
-        catch (IOException e)
-        {
-            //TODO: Log exception
-        }
-
-        System.out.println("Consuming Message - " + new String(message.getBody()));
-    }*/
-
 }

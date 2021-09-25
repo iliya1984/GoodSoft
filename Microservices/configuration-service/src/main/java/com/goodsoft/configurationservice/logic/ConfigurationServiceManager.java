@@ -1,16 +1,18 @@
 package com.goodsoft.configurationservice.logic;
 
-import com.goodsoft.configurationservice.entities.DomainConfiguration;
+import com.goodsoft.configurationservice.dtos.DomainConfiguration;
+import com.goodsoft.configurationservice.dtos.DomainConfigurationRequest;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 public class ConfigurationServiceManager implements IConfigurationServiceManager
 {
     @Override
-    public DomainConfiguration getMicroserviceConfiguration(String domainName) {
+    public DomainConfiguration getDomainConfiguration(DomainConfigurationRequest request) {
 
         var connectionString = new ConnectionString(
                 "mongodb://localhost:27017/?authSource=admin"
@@ -25,7 +27,12 @@ public class ConfigurationServiceManager implements IConfigurationServiceManager
         var database = mongoClient.getDatabase("configuration");
 
         var collection = database.getCollection("microserviceConfiguration");
-        var documents = collection.find(Filters.eq("domainName", domainName));
+
+        String domainName = request.getDomainName();
+        String key = request.getKey();
+        var keyValue = new ObjectId(key);
+
+        var documents = collection.find(Filters.eq("key", keyValue));
 
        if(documents != null)
        {
@@ -33,12 +40,14 @@ public class ConfigurationServiceManager implements IConfigurationServiceManager
            if(document != null)
            {
                var name = document.getString("domainName");
+               var configurationKey = document.getObjectId("key");
                var valueDocument = (Document)document.get("value");
                var value = valueDocument.toJson();
 
                var section = new DomainConfiguration();
                section.setDomainName(name);
                section.setValue(value);
+               section.setKey(configurationKey.toString());
 
                return section;
            }

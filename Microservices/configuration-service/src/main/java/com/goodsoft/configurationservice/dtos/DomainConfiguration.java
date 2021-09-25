@@ -1,16 +1,17 @@
-package com.goodsoft.configurationservice.entities;
+package com.goodsoft.configurationservice.dtos;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.bson.types.ObjectId;
-
-import java.util.UUID;
 
 public class DomainConfiguration
 {
     @Getter
     @Setter
     private String domainName;
+
+    @Getter
+    @Setter
+    private String key;
 
     @Getter
     @Setter

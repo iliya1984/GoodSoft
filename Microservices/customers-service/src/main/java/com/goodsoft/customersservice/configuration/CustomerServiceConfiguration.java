@@ -5,7 +5,7 @@ import com.goodsoft.interfaces.customers.models.CreateCustomerModel;
 import lombok.Getter;
 import lombok.Setter;
 
-public class ConfigurationSection
+public class CustomerServiceConfiguration
 {
     @Getter
     @Setter
@@ -15,4 +15,9 @@ public class ConfigurationSection
     @Getter
     @Setter
     private DatasourceConfiguration datasource;
+
+    @JsonProperty("messageBroker")
+    @Getter
+    @Setter
+    private MessageBrokerConfiguration messageBroker;
 }
