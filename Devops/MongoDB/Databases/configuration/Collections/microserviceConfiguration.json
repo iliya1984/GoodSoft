@@ -2,7 +2,9 @@
   "_id": {
     "$oid": "6184fa045345ff8d247f2429"
   },
-  "key": "ObjectId(\"614f6e7cb5a7f93ac82a370b\")",
+  "key": {
+    "$oid": "614f6e7cb5a7f93ac82a370b"
+  },
   "domainName": "customers",
   "value": {
     "serviceName": "customerservice",
