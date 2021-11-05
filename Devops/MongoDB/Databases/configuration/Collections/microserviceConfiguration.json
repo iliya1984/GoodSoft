@@ -1,0 +1,18 @@
+[{
+  "_id": {
+    "$oid": "6184fa045345ff8d247f2429"
+  },
+  "key": "614f6e7cb5a7f93ac82a370b",
+  "domainName": "customers",
+  "value": {
+    "serviceName": "customerservice",
+    "dataSource": {
+      "datasourceType": "MongoDB",
+      "connectionString": "mongodb://localhost:27017/"
+    },
+    "messageBroker": {
+      "type": "RabbitMQ",
+      "routing": []
+    }
+  }
+}]
