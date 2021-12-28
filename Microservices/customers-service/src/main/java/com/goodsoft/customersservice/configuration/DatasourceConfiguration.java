@@ -15,4 +15,9 @@ public class DatasourceConfiguration
     @Setter
     @JsonProperty("connectionString")
     private String connectionString;
+
+    @Getter
+    @Setter
+    @JsonProperty("user")
+    private String user;
 }

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Locale;
+
 public class CustomerServiceConfiguration
 {
     @Getter
@@ -19,4 +21,25 @@ public class CustomerServiceConfiguration
     @Getter
     @Setter
     private MessageBrokerConfiguration messageBroker;
+
+    public MessageRoutingItem findMessageRoutingByName(String name)
+    {
+        var messageBrokerConfiguration  = getMessageBroker();
+        if(messageBrokerConfiguration == null)
+        {
+            return null;
+        }
+
+        var routing = messageBrokerConfiguration.getRoutingItems();
+        if(routing == null || routing.isEmpty())
+        {
+            return null;
+        }
+
+        var routingItem = routing.stream()
+                .filter(ri -> ri.getAction() != null && ri.getAction().toLowerCase(Locale.ROOT).equals(name))
+                .findFirst();
+
+        return routingItem.get();
+    }
 }

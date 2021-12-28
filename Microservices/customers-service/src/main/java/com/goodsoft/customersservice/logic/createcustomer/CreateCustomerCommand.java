@@ -6,7 +6,9 @@ import com.goodsoft.interfaces.customers.models.CreateCustomerModel;
 import lombok.Getter;
 import lombok.Setter;
 
-public class CreateCustomerCommand implements Command<Customer>
+import java.util.UUID;
+
+public class CreateCustomerCommand implements Command<UUID>
 {
     @Getter
     @Setter
