@@ -1,7 +1,6 @@
 package com.goodsoft.customersservice.configuration;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.goodsoft.interfaces.customers.models.CreateCustomerModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +10,7 @@ public class CustomerServiceConfiguration
     @Setter
     private String serviceName;
 
-    @JsonProperty("datasource")
+    @JsonProperty("dataSource")
     @Getter
     @Setter
     private DatasourceConfiguration datasource;

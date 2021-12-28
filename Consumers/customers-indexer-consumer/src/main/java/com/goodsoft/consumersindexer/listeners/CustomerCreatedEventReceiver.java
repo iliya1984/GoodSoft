@@ -21,9 +21,6 @@ public class CustomerCreatedEventReceiver
 
     public void receiveMessage(Customer message)
     {
-
-
-
         System.out.println("Received <" + message + ">");
         latch.countDown();
     }
