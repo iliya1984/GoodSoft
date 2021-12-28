@@ -1,9 +1,11 @@
-package com.goodsoft.interfaces.customers.models;
+package com.goodsoft.interfaces.customers.models.customers;
 
 import lombok.Getter;
 import lombok.Setter;
 
-public class CreateCustomerModel
+import java.util.List;
+
+public class CustomerModel
 {
     @Getter
     @Setter
@@ -15,10 +17,9 @@ public class CreateCustomerModel
 
     @Getter
     @Setter
-    private String email;
+    private List<CustomerEmailModel> email;
 
     @Getter
     @Setter
-    private String phone;
+    private List<CustomerPhoneModel> phone;
 }
-

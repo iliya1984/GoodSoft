@@ -1,9 +1,9 @@
-package com.goodsoft.interfaces.customers.entities;
+package com.goodsoft.interfaces.customers.models.customers;
 
 import lombok.Getter;
 import lombok.Setter;
 
-public class CustomerEmail
+public class CustomerEmailModel
 {
     @Getter
     @Setter
