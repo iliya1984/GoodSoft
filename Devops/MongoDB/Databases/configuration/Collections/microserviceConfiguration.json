@@ -9,12 +9,18 @@
   "value": {
     "serviceName": "customerservice",
     "dataSource": {
-      "datasourceType": "MongoDB",
-      "connectionString": "mongodb://localhost:27017/"
+      "type": "MongoDB",
+      "connectionString": "mongodb://localhost:27017/",
+      "user": "admin"
     },
     "messageBroker": {
       "type": "RabbitMQ",
-      "routing": []
+      "routing": [
+        {
+          "exchange": "customers-customer-created",
+          "action": "customercreate"
+        }
+      ]
     }
   }
 }]
