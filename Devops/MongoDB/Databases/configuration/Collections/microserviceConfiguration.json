@@ -13,6 +13,10 @@
       "connectionString": "mongodb://localhost:27017/",
       "user": "admin"
     },
+    "searchServer": {
+      "host": "localhost",
+      "port": "9200"
+    },
     "messageBroker": {
       "type": "RabbitMQ",
       "routing": [

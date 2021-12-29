@@ -17,6 +17,11 @@ public class CustomerServiceConfiguration
     @Setter
     private DatasourceConfiguration datasource;
 
+    @JsonProperty("searchServer")
+    @Getter
+    @Setter
+    private SearchServerConfiguration searchServer;
+
     @JsonProperty("messageBroker")
     @Getter
     @Setter
