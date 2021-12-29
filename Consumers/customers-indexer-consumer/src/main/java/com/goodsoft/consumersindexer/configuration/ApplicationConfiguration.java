@@ -1,6 +1,6 @@
 package com.goodsoft.consumersindexer.configuration;
 
-import com.goodsoft.consumersindexer.listeners.CustomerCreatedEventReceiver;
+import com.goodsoft.consumersindexer.logic.CustomerCreatedEventConsumer;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -43,7 +43,7 @@ public class ApplicationConfiguration
     }
 
     @Bean
-    MessageListenerAdapter listenerAdapter(CustomerCreatedEventReceiver receiver, MessageConverter messageConverter) {
+    MessageListenerAdapter listenerAdapter(CustomerCreatedEventConsumer receiver, MessageConverter messageConverter) {
         var adapter = new MessageListenerAdapter(receiver, "receiveMessage");
         adapter.setMessageConverter(messageConverter);
         return adapter;
