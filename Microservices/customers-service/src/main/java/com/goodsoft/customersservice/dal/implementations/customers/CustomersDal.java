@@ -1,12 +1,11 @@
-package com.goodsoft.customersservice.dal.implementations;
+package com.goodsoft.customersservice.dal.implementations.customers;
 
 import com.goodsoft.customersservice.configuration.CustomerServiceConfiguration;
-import com.goodsoft.customersservice.dal.abstractions.ICustomersDal;
+import com.goodsoft.customersservice.dal.abstractions.customers.ICustomersDal;
+import com.goodsoft.customersservice.dal.abstractions.customers.ICustomersProducer;
+import com.goodsoft.customersservice.dal.implementations.BaseDal;
 import com.goodsoft.customersservice.entities.CustomerEmailEntity;
 import com.goodsoft.customersservice.entities.CustomerEntity;
-import com.goodsoft.interfaces.customers.models.customermessages.CustomerCreatedMessage;
-import com.mongodb.DBObject;
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Service;
 import org.bson.Document;
 
@@ -15,15 +14,14 @@ import java.util.ArrayList;
 @Service
 public class CustomersDal extends BaseDal implements ICustomersDal
 {
-    private final String Action = "customercreate";
 
-    private AmqpTemplate _rabbitTemplate;
+    private ICustomersProducer _producer;
 
-    public CustomersDal(CustomerServiceConfiguration configuration, AmqpTemplate rabbitMQTemplate)
+    public CustomersDal(CustomerServiceConfiguration configuration, ICustomersProducer producer)
     {
         super(configuration);
 
-        _rabbitTemplate = rabbitMQTemplate;
+        _producer = producer;
     }
 
     @Override
@@ -33,34 +31,12 @@ public class CustomersDal extends BaseDal implements ICustomersDal
         customer.setId(customerId);
 
         insertCustomer(customer);
-        notifyCustomerCreated(customer);
+        _producer.notifyCustomerCreated(customer);
 
         return customer;
     }
 
-    private  void notifyCustomerCreated(CustomerEntity customer)
-    {
-        var message = new CustomerCreatedMessage();
-        message.setFirstName(customer.getFirstName());
-        message.setLastName(customer.getLastName());
 
-        if(customer.getEmails() != null)
-        {
-            var primaryEmail = customer.getEmails().stream().findFirst();
-            if(primaryEmail != null && false == primaryEmail.isEmpty())
-            {
-                message.setEmail(primaryEmail.get().getEmail());
-            }
-        }
-
-        var messageRouting = _configuration.findMessageRoutingByName(Action);
-        if(messageRouting != null)
-        {
-            var exchange = messageRouting.getExchange();
-            var routingKey = messageRouting.getRoutingKey();
-            _rabbitTemplate.convertAndSend(exchange, routingKey, message);
-        }
-    }
 
     private void insertCustomer(CustomerEntity customer)
     {

@@ -2,7 +2,7 @@ package com.goodsoft.customersservice.logic.createcustomer;
 
 import an.awesome.pipelinr.Command;
 import com.goodsoft.customersservice.configuration.CustomerServiceConfiguration;
-import com.goodsoft.customersservice.dal.abstractions.ICustomersDal;
+import com.goodsoft.customersservice.dal.abstractions.customers.ICustomersDal;
 import com.goodsoft.customersservice.entities.CustomerEmailEntity;
 import com.goodsoft.customersservice.entities.CustomerEntity;
 import com.goodsoft.infra.mediator.annotations.RequestHanlder;

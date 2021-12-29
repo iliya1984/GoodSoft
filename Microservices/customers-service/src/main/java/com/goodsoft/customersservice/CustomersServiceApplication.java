@@ -2,8 +2,6 @@ package com.goodsoft.customersservice;
 import com.goodsoft.customersservice.configuration.ConfigurationManager;
 import com.goodsoft.customersservice.configuration.CustomerServiceConfiguration;
 import com.goodsoft.customersservice.configuration.IConfigurationManager;
-import com.goodsoft.customersservice.dal.abstractions.ICustomersDal;
-import com.goodsoft.customersservice.dal.implementations.CustomersDal;
 import com.goodsoft.infra.mediator.factory.IPipelineFactory;
 import com.goodsoft.infra.mediator.factory.PipelineFactory;
 import org.springframework.boot.SpringApplication;
