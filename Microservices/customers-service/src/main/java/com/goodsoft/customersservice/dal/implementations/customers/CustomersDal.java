@@ -55,7 +55,7 @@ public class CustomersDal extends BaseDal implements ICustomersDal
     public SearchResult<CustomerSearchResultItem> search(SearchQuery query)
     {
         Query searchQuery = new NativeSearchQueryBuilder()
-                .withFilter(regexpQuery("title", ".*data.*"))
+                .withFilter(regexpQuery("firstName", ".*iliya.*"))
                 .build();
 
         var customers =

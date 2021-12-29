@@ -40,6 +40,12 @@ public class CustomerController extends RestService implements ICustomersService
         return response;
     }
 
+    @GetMapping("/search")
+    public void search()
+    {
+
+    }
+
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> create(@RequestBody CreateCustomerModel model)
