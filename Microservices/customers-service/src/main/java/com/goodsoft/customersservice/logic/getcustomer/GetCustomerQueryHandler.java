@@ -4,13 +4,13 @@ import an.awesome.pipelinr.Command;
 import com.goodsoft.customersservice.configuration.CustomerServiceConfiguration;
 import com.goodsoft.customersservice.configuration.IConfigurationManager;
 import com.goodsoft.infra.mediator.annotations.RequestHanlder;
-import com.goodsoft.interfaces.customers.entities.Customer;
-import com.goodsoft.interfaces.customers.entities.CustomerEmail;
+import com.goodsoft.interfaces.customers.models.customers.CustomerEmailModel;
+import com.goodsoft.interfaces.customers.models.customers.CustomerModel;
 
 import java.util.ArrayList;
 
 @RequestHanlder()
-public class GetCustomerQueryHandler implements Command.Handler<GetCustomerQuery, Customer>
+public class GetCustomerQueryHandler implements Command.Handler<GetCustomerQuery, CustomerModel>
 {
     private CustomerServiceConfiguration _config;
 
@@ -19,19 +19,19 @@ public class GetCustomerQueryHandler implements Command.Handler<GetCustomerQuery
         _config = configuration;
     }
     @Override
-    public Customer handle(GetCustomerQuery request)
+    public CustomerModel handle(GetCustomerQuery request)
     {
-        var customer = new Customer();
+        var customer = new CustomerModel();
         customer.setFirstName("Iliya");
         customer.setLastName("Nahshan");
 
-        var primaryEmail = new CustomerEmail();
+        var primaryEmail = new CustomerEmailModel();
         primaryEmail.setEmail("iliya.nahshan@gmail.com");
         primaryEmail.setPrimary(true);
 
-        var emails = new ArrayList<CustomerEmail>();
+        var emails = new ArrayList<CustomerEmailModel>();
         emails.add(primaryEmail);
-        customer.setEmails(emails);
+        customer.setEmail(emails);
 
         return customer;
     }

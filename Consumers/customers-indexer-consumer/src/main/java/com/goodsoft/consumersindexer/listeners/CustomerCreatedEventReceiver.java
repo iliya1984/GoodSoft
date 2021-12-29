@@ -2,7 +2,7 @@ package com.goodsoft.consumersindexer.listeners;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.goodsoft.consumersindexer.models.CustomerEntry;
-import com.goodsoft.interfaces.customers.entities.Customer;
+import com.goodsoft.interfaces.customers.models.customermessages.CustomerCreatedMessage;
 import jakarta.xml.bind.DatatypeConverter;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
@@ -19,7 +19,7 @@ public class CustomerCreatedEventReceiver
 {
     private CountDownLatch latch = new CountDownLatch(1);
 
-    public void receiveMessage(Customer message)
+    public void receiveMessage(CustomerCreatedMessage message)
     {
         System.out.println("Received <" + message + ">");
         latch.countDown();

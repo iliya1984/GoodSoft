@@ -4,5 +4,5 @@ import com.goodsoft.customersservice.entities.CustomerEntity;
 
 public interface ICustomersDal
 {
-    CustomerEntity Create(CustomerEntity customer);
+    CustomerEntity create(CustomerEntity customer);
 }
