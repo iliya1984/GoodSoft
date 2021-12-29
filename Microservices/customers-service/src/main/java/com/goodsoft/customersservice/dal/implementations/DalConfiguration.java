@@ -39,8 +39,8 @@ public class DalConfiguration
     }
 
     @Bean
-    public ElasticsearchOperations elasticsearchTemplate(CustomerServiceConfiguration configuration) {
-
+    public ElasticsearchOperations elasticsearchTemplate(CustomerServiceConfiguration configuration)
+    {
         var client = client(configuration);
         return new ElasticsearchRestTemplate(client);
     }

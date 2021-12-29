@@ -4,6 +4,7 @@ import com.goodsoft.customersservice.entities.customers.CustomerEmailEntity;
 import com.goodsoft.customersservice.entities.customers.CustomerPhoneEntity;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,7 +13,8 @@ public class CustomerSearchResultItem
 {
     @Getter
     @Setter
-    private UUID id;
+    @Id
+    private String id;
 
     @Getter
     @Setter

@@ -9,21 +9,34 @@ import com.goodsoft.customersservice.entities.customers.CustomerEntity;
 import com.goodsoft.customersservice.entities.search.CustomerSearchResultItem;
 import com.goodsoft.customersservice.entities.search.SearchQuery;
 import com.goodsoft.customersservice.entities.search.SearchResult;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.bson.Document;
 
 import java.util.ArrayList;
 
+import static org.elasticsearch.index.query.QueryBuilders.regexpQuery;
+
 @Service
 public class CustomersDal extends BaseDal implements ICustomersDal
 {
     private ICustomersProducer _producer;
+    private ElasticsearchOperations _elasticsearchOperations;
 
-    public CustomersDal(CustomerServiceConfiguration configuration, ICustomersProducer producer)
+    public CustomersDal(
+            CustomerServiceConfiguration configuration,
+            ICustomersProducer producer,
+            ElasticsearchOperations elasticsearchOperations
+            )
     {
         super(configuration);
 
         _producer = producer;
+        _elasticsearchOperations = elasticsearchOperations;
     }
 
     @Override
@@ -41,7 +54,18 @@ public class CustomersDal extends BaseDal implements ICustomersDal
     @Override
     public SearchResult<CustomerSearchResultItem> search(SearchQuery query)
     {
-        return null;
+        Query searchQuery = new NativeSearchQueryBuilder()
+                .withFilter(regexpQuery("title", ".*data.*"))
+                .build();
+
+        var customers =
+                _elasticsearchOperations.search(searchQuery, CustomerSearchResultItem.class);
+
+        var searchResult = new SearchResult<CustomerSearchResultItem>();
+
+        //TODO: map search hists to customer search result items
+
+       return searchResult;
     }
 
 
