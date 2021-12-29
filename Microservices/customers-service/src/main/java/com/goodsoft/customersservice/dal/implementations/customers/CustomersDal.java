@@ -4,8 +4,11 @@ import com.goodsoft.customersservice.configuration.CustomerServiceConfiguration;
 import com.goodsoft.customersservice.dal.abstractions.customers.ICustomersDal;
 import com.goodsoft.customersservice.dal.abstractions.customers.ICustomersProducer;
 import com.goodsoft.customersservice.dal.implementations.BaseDal;
-import com.goodsoft.customersservice.entities.CustomerEmailEntity;
-import com.goodsoft.customersservice.entities.CustomerEntity;
+import com.goodsoft.customersservice.entities.customers.CustomerEmailEntity;
+import com.goodsoft.customersservice.entities.customers.CustomerEntity;
+import com.goodsoft.customersservice.entities.search.CustomerSearchResultItem;
+import com.goodsoft.customersservice.entities.search.SearchQuery;
+import com.goodsoft.customersservice.entities.search.SearchResult;
 import org.springframework.stereotype.Service;
 import org.bson.Document;
 
@@ -14,7 +17,6 @@ import java.util.ArrayList;
 @Service
 public class CustomersDal extends BaseDal implements ICustomersDal
 {
-
     private ICustomersProducer _producer;
 
     public CustomersDal(CustomerServiceConfiguration configuration, ICustomersProducer producer)
@@ -36,6 +38,11 @@ public class CustomersDal extends BaseDal implements ICustomersDal
         return customer;
     }
 
+    @Override
+    public SearchResult<CustomerSearchResultItem> search(SearchQuery query)
+    {
+        return null;
+    }
 
 
     private void insertCustomer(CustomerEntity customer)

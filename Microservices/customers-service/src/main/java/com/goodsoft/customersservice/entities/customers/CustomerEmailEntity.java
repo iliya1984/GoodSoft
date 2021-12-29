@@ -1,4 +1,4 @@
-package com.goodsoft.customersservice.entities;
+package com.goodsoft.customersservice.entities.customers;
 
 import lombok.Getter;
 import lombok.Setter;

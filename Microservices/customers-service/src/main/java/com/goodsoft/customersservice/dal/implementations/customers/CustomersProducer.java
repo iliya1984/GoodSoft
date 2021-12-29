@@ -2,7 +2,7 @@ package com.goodsoft.customersservice.dal.implementations.customers;
 
 import com.goodsoft.customersservice.configuration.CustomerServiceConfiguration;
 import com.goodsoft.customersservice.dal.abstractions.customers.ICustomersProducer;
-import com.goodsoft.customersservice.entities.CustomerEntity;
+import com.goodsoft.customersservice.entities.customers.CustomerEntity;
 import com.goodsoft.interfaces.customers.models.customermessages.CustomerCreatedMessage;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Service;

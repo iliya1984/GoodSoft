@@ -1,6 +1,6 @@
 package com.goodsoft.customersservice.dal.abstractions.customers;
 
-import com.goodsoft.customersservice.entities.CustomerEntity;
+import com.goodsoft.customersservice.entities.customers.CustomerEntity;
 
 public interface ICustomersProducer
 {
