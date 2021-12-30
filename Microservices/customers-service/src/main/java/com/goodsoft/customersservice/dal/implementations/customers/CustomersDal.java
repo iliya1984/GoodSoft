@@ -7,17 +7,20 @@ import com.goodsoft.customersservice.dal.implementations.BaseDal;
 import com.goodsoft.customersservice.entities.customers.CustomerEmailEntity;
 import com.goodsoft.customersservice.entities.customers.CustomerEntity;
 import com.goodsoft.customersservice.entities.search.*;
+import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.support.IndicesOptions;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.bson.Document;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.elasticsearch.index.query.QueryBuilders.regexpQuery;
 
@@ -26,6 +29,14 @@ public class CustomersDal extends BaseDal implements ICustomersDal
 {
     private ICustomersProducer _producer;
     private ElasticsearchOperations _elasticsearchOperations;
+
+    private static List<String> searchableFields = new ArrayList<String>()
+    {
+        {
+            add("firstName");
+            add("lastName");
+        }
+    };
 
     public CustomersDal(
             CustomerServiceConfiguration configuration,
@@ -56,27 +67,7 @@ public class CustomersDal extends BaseDal implements ICustomersDal
     {
         try
         {
-            var queryBuidler = new NativeSearchQueryBuilder();
-
-            for(var filter : query.getFilters())
-            {
-                var propertyName = filter.getPropertyName();
-                var operation = filter.getOperation();
-                var value = filter.getValue();
-
-                switch (operation)
-                {
-                    case Equals:
-                        queryBuidler
-                                .withFilter(QueryBuilders.matchQuery(propertyName, value));
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            var searchQuery =  queryBuidler.build();
-
+            var searchQuery = buildQuery(query);
             var searchResponse =
                     _elasticsearchOperations.search(searchQuery, CustomerSearchResultItem.class, IndexCoordinates.of("customers"));
 
@@ -100,6 +91,44 @@ public class CustomersDal extends BaseDal implements ICustomersDal
         }
 
         return  null;
+    }
+
+    private NativeSearchQuery buildQuery(SearchQuery query)
+    {
+        var queryBuidler = new NativeSearchQueryBuilder();
+
+        for(var filter : query.getFilters())
+        {
+            var propertyName = filter.getPropertyName();
+            var operation = filter.getOperation();
+            var value = filter.getValue();
+
+            switch (operation)
+            {
+                case Equals:
+                    queryBuidler
+                        .withFilter(QueryBuilders.matchQuery(propertyName, value));
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        var searchTerm = query.getSearchTerm();
+        if(searchTerm != null && false == searchTerm.isEmpty())
+        {
+            var boolQuery = QueryBuilders.boolQuery();
+
+            for(var field : searchableFields)
+            {
+                boolQuery.should(QueryBuilders.wildcardQuery(field, "*" + searchTerm + "*"));
+            }
+
+            queryBuidler.withFilter(boolQuery);
+        }
+
+        var searchQuery =  queryBuidler.build();
+        return searchQuery;
     }
 
     private void insertCustomer(CustomerEntity customer)

@@ -54,23 +54,27 @@ public class SearchCustomersQueryMapper implements ISearchCustomersQueryMapper
         query.setFilters(filters);
 
         var allFiltersString = request.getFilters();
-        String[] filterItemStrings = allFiltersString.split(",");
 
-        for(var filterItemString : filterItemStrings)
+        if(allFiltersString != null && false == allFiltersString.isEmpty())
         {
-            String[] filterInfo = filterItemString.split("_");
+            String[] filterItemStrings = allFiltersString.split(",");
 
-            if(filterInfo.length == 3)
+            for(var filterItemString : filterItemStrings)
             {
-                var filter = new SearchFilter();
+                String[] filterInfo = filterItemString.split("_");
 
-                filter.setPropertyName(filterInfo[0]);
-                filter.setValue(filterInfo[2]);
+                if(filterInfo.length == 3)
+                {
+                    var filter = new SearchFilter();
 
-                var filterOperation = mapFilterOperation(filterInfo[1]);
-                filter.setOperation(filterOperation);
+                    filter.setPropertyName(filterInfo[0]);
+                    filter.setValue(filterInfo[2]);
 
-                filters.add(filter);
+                    var filterOperation = mapFilterOperation(filterInfo[1]);
+                    filter.setOperation(filterOperation);
+
+                    filters.add(filter);
+                }
             }
         }
 
