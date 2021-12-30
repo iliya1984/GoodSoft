@@ -5,8 +5,8 @@ public enum FilterOperation
     None,
     Equals,
     NotEquals,
-    GreaterThan,
-    LessThan,
+    GreaterOrEquals,
+    LessOrEquals,
     In,
     NotIn
 }

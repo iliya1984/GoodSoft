@@ -14,7 +14,7 @@ public class CustomerSearchResultItem
     @Getter
     @Setter
     @Id
-    private String id;
+    private UUID id;
 
     @Getter
     @Setter

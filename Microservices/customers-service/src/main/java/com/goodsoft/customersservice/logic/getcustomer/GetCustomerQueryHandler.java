@@ -31,7 +31,7 @@ public class GetCustomerQueryHandler implements Command.Handler<GetCustomerQuery
 
         var emails = new ArrayList<CustomerEmailModel>();
         emails.add(primaryEmail);
-        customer.setEmail(emails);
+        customer.setEmails(emails);
 
         return customer;
     }
