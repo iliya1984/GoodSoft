@@ -18,9 +18,17 @@ public class SearchCustomersQuery implements Command<SearchResultModel<CustomerS
 
     @Getter
     @Setter
-    private int skip;
+    private Integer skip;
 
     @Getter
     @Setter
-    private int take;
+    private Integer take;
+
+    @Getter
+    @Setter
+    private String sortProperty;
+
+    @Getter
+    @Setter
+    private String sortOrder;
 }

@@ -38,6 +38,16 @@ public class SearchCustomersQueryMapper implements ISearchCustomersQueryMapper
         query.setSkip(request.getSkip());
         query.setTake(request.getTake());
 
+        var sortProperty = request.getSortProperty();
+        if(sortProperty != null && false == sortProperty.isEmpty())
+        {
+            var sort = new SortOptions();
+            sort.setPropertyName(sortProperty);
+            sort.setSortOrder(mapSortOrder(request.getSortOrder()));
+
+            query.setSortOptions(sort);
+        }
+
         var filters = new ArrayList<SearchFilter>();
 
         query.setFilters(filters);
@@ -79,7 +89,22 @@ public class SearchCustomersQueryMapper implements ISearchCustomersQueryMapper
         return model;
     }
 
+    private SortOrder mapSortOrder(String sortOrder)
+    {
+        if(sortOrder == null)
+        {
+            return SortOrder.Descending;
+        }
 
+        switch (sortOrder)
+        {
+            case "asc":
+                return SortOrder.Ascending;
+            case "desc":
+            default:
+                return SortOrder.Descending;
+        }
+    }
 
     private FilterOperation mapFilterOperation(String filterOperation)
     {

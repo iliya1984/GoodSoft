@@ -40,13 +40,15 @@ public class CustomerController extends RestService implements ICustomersService
     }
 
     @GetMapping("/search")
-    public CustomersSearchResponse search(String searchTerm, String filters, int skip, int take)
+    public CustomersSearchResponse search(String searchTerm, String filters, Integer skip, Integer take, String sortProperty, String sortOrder)
     {
         var query = new SearchCustomersQuery();
         query.setSearchTerm(searchTerm);
         query.setFilters(filters);
         query.setSkip(skip);
         query.setTake(take);
+        query.setSortProperty(sortProperty);
+        query.setSortOrder(sortOrder);
 
         var pipeline = _pipelineFactory.getPipeline(query);
         var searchResult = pipeline.send(query);
