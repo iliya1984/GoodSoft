@@ -41,7 +41,7 @@ public class CustomerController extends RestService implements ICustomersService
     }
 
     @GetMapping("/search")
-    public void search()
+    public void search(String searchTerm, String filters, int skip, int take)
     {
 
     }

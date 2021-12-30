@@ -1,11 +1,11 @@
-package com.goodsoft.interfaces.customers.models.customermessages;
+package com.goodsoft.interfaces.customers.models.search;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.UUID;
 
-public class CustomerCreatedMessage
+public class CustomerSearchResultItemModel
 {
     @Getter
     @Setter
