@@ -2,8 +2,7 @@ package com.goodsoft.customersservice.controllers;
 
 import com.goodsoft.customersservice.logic.createcustomer.CreateCustomerCommand;
 import com.goodsoft.customersservice.logic.getcustomer.GetCustomerQuery;
-import com.goodsoft.customersservice.logic.search.SearchCustomersQuery;
-import com.goodsoft.infra.mediator.errorhandling.ValidationException;
+import com.goodsoft.customersservice.logic.searchcustomers.SearchCustomersQuery;
 import com.goodsoft.infra.mediator.factory.IPipelineFactory;
 import com.goodsoft.infra.microservice.RestService;
 import com.goodsoft.interfaces.customers.ICustomersService;
@@ -13,8 +12,6 @@ import com.goodsoft.interfaces.customers.models.search.CustomersSearchResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/customers")

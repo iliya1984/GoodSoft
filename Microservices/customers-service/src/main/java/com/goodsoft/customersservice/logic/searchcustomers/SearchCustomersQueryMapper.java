@@ -1,36 +1,15 @@
-package com.goodsoft.customersservice.logic.search;
+package com.goodsoft.customersservice.logic.searchcustomers;
 
-import an.awesome.pipelinr.Command;
-import com.goodsoft.customersservice.dal.abstractions.customers.ICustomersDal;
 import com.goodsoft.customersservice.entities.search.*;
-import com.goodsoft.infra.mediator.annotations.RequestHanlder;
 import com.goodsoft.interfaces.customers.models.search.CustomerSearchResultItemModel;
 import com.goodsoft.interfaces.customers.models.search.SearchResultModel;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
-@RequestHanlder()
-public class SearchCustomersQueryHandler implements Command.Handler<SearchCustomersQuery, SearchResultModel<CustomerSearchResultItemModel>>
+@Service
+public class SearchCustomersQueryMapper implements ISearchCustomersQueryMapper
 {
-    private ICustomersDal _dal;
-
-    public SearchCustomersQueryHandler(ICustomersDal dal)
-    {
-        _dal = dal;
-    }
-
-    @Override
-    public SearchResultModel<CustomerSearchResultItemModel> handle(SearchCustomersQuery request)
-    {
-        var query = mapRequestToSearchQuery(request);
-
-        var result = _dal.search(query);
-
-        var model = mapToSearchResultModel(result);
-
-        return model;
-    }
-
     public SearchResultModel<CustomerSearchResultItemModel> mapToSearchResultModel(SearchResult<CustomerSearchResultItem> searchResult)
     {
         var itemModels = new ArrayList<CustomerSearchResultItemModel>();
@@ -51,20 +30,7 @@ public class SearchCustomersQueryHandler implements Command.Handler<SearchCustom
         return model;
     }
 
-    private CustomerSearchResultItemModel mapToSearchResultItemModel(CustomerSearchResultItem item)
-    {
-        var model = new CustomerSearchResultItemModel();
-
-        model.setId(item.getId());
-        model.setFirstName(item.getFirstName());
-        model.setLastName(item.getLastName());
-        model.setEmail(item.getPrimaryEmail());
-        model.setPhone(item.getPrimaryPhone());
-
-        return model;
-    }
-
-    private SearchQuery mapRequestToSearchQuery(SearchCustomersQuery request)
+    public SearchQuery mapRequestToSearchQuery(SearchCustomersQuery request)
     {
         var query = new SearchQuery();
 
@@ -100,6 +66,21 @@ public class SearchCustomersQueryHandler implements Command.Handler<SearchCustom
         return query;
     }
 
+    private CustomerSearchResultItemModel mapToSearchResultItemModel(CustomerSearchResultItem item)
+    {
+        var model = new CustomerSearchResultItemModel();
+
+        model.setId(item.getId());
+        model.setFirstName(item.getFirstName());
+        model.setLastName(item.getLastName());
+        model.setEmail(item.getPrimaryEmail());
+        model.setPhone(item.getPrimaryPhone());
+
+        return model;
+    }
+
+
+
     private FilterOperation mapFilterOperation(String filterOperation)
     {
         switch (filterOperation)
@@ -116,5 +97,4 @@ public class SearchCustomersQueryHandler implements Command.Handler<SearchCustom
                 return FilterOperation.None;
         }
     }
-
 }

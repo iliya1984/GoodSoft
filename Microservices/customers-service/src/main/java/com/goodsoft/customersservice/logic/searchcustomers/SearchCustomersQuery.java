@@ -1,8 +1,6 @@
-package com.goodsoft.customersservice.logic.search;
+package com.goodsoft.customersservice.logic.searchcustomers;
 
 import an.awesome.pipelinr.Command;
-import com.goodsoft.customersservice.entities.search.CustomerSearchResultItem;
-import com.goodsoft.customersservice.entities.search.SearchResult;
 import com.goodsoft.interfaces.customers.models.search.CustomerSearchResultItemModel;
 import com.goodsoft.interfaces.customers.models.search.SearchResultModel;
 import lombok.Getter;
