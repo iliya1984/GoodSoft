@@ -25,6 +25,12 @@ public class CustomerCreatedEventConsumer
         customer.setFirstName(message.getFirstName());
         customer.setLastName(message.getLastName());
 
+        var id = message.getId();
+        if(id != null)
+        {
+            customer.setCustomerId(id.toString());
+        }
+
         _repository.save(customer);
 
         var customers = _repository.findAll();

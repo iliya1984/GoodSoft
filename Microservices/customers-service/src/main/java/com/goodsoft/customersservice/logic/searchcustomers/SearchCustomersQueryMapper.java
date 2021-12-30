@@ -6,6 +6,7 @@ import com.goodsoft.interfaces.customers.models.search.SearchResultModel;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 @Service
 public class SearchCustomersQueryMapper implements ISearchCustomersQueryMapper
@@ -80,7 +81,12 @@ public class SearchCustomersQueryMapper implements ISearchCustomersQueryMapper
     {
         var model = new CustomerSearchResultItemModel();
 
-        model.setId(item.getId());
+        var id = item.getCustomerId();
+        if(id != null && false == id.isEmpty())
+        {
+            model.setId(UUID.fromString(item.getCustomerId()));
+        }
+
         model.setFirstName(item.getFirstName());
         model.setLastName(item.getLastName());
         model.setEmail(item.getPrimaryEmail());

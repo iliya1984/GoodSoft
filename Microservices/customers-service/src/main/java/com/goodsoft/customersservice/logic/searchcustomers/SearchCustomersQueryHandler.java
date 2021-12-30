@@ -32,7 +32,4 @@ public class SearchCustomersQueryHandler implements Command.Handler<SearchCustom
 
         return model;
     }
-
-
-
 }

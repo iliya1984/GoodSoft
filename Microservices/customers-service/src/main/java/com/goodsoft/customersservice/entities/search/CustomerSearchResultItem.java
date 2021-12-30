@@ -13,8 +13,7 @@ public class CustomerSearchResultItem
 {
     @Getter
     @Setter
-    @Id
-    private UUID id;
+    private String customerId;
 
     @Getter
     @Setter

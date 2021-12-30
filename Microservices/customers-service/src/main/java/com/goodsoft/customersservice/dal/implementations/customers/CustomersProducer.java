@@ -26,6 +26,7 @@ public class CustomersProducer implements ICustomersProducer
         var message = new CustomerCreatedMessage();
         message.setFirstName(customer.getFirstName());
         message.setLastName(customer.getLastName());
+        message.setId(customer.getId());
 
         if(customer.getEmails() != null)
         {

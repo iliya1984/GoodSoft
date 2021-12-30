@@ -6,9 +6,9 @@ import com.goodsoft.customersservice.dal.abstractions.customers.ICustomersProduc
 import com.goodsoft.customersservice.dal.implementations.BaseDal;
 import com.goodsoft.customersservice.entities.customers.CustomerEmailEntity;
 import com.goodsoft.customersservice.entities.customers.CustomerEntity;
-import com.goodsoft.customersservice.entities.search.CustomerSearchResultItem;
-import com.goodsoft.customersservice.entities.search.SearchQuery;
-import com.goodsoft.customersservice.entities.search.SearchResult;
+import com.goodsoft.customersservice.entities.search.*;
+import org.elasticsearch.action.support.IndicesOptions;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
@@ -54,20 +54,53 @@ public class CustomersDal extends BaseDal implements ICustomersDal
     @Override
     public SearchResult<CustomerSearchResultItem> search(SearchQuery query)
     {
-        Query searchQuery = new NativeSearchQueryBuilder()
-                .withFilter(regexpQuery("firstName", ".*iliya.*"))
-                .build();
+        try
+        {
+            var queryBuidler = new NativeSearchQueryBuilder();
 
-        var customers =
-                _elasticsearchOperations.search(searchQuery, CustomerSearchResultItem.class);
+            for(var filter : query.getFilters())
+            {
+                var propertyName = filter.getPropertyName();
+                var operation = filter.getOperation();
+                var value = filter.getValue();
 
-        var searchResult = new SearchResult<CustomerSearchResultItem>();
+                switch (operation)
+                {
+                    case Equals:
+                        queryBuidler
+                                .withFilter(QueryBuilders.matchQuery(propertyName, value));
+                        break;
+                    default:
+                        break;
+                }
+            }
 
-        //TODO: map search hists to customer search result items
+            var searchQuery =  queryBuidler.build();
 
-       return searchResult;
+            var searchResponse =
+                    _elasticsearchOperations.search(searchQuery, CustomerSearchResultItem.class, IndexCoordinates.of("customers"));
+
+            var items = new ArrayList<CustomerSearchResultItem>();
+
+            var searchResult = new SearchResult<CustomerSearchResultItem>();
+            searchResult.setItems(items);
+
+            var searchHists = searchResponse.getSearchHits();
+            for(var searchHit : searchHists)
+            {
+                var item = searchHit.getContent();
+                items.add(item);
+            }
+
+            return searchResult;
+        }
+        catch(Exception ex)
+        {
+            int i = 1;
+        }
+
+        return  null;
     }
-
 
     private void insertCustomer(CustomerEntity customer)
     {
