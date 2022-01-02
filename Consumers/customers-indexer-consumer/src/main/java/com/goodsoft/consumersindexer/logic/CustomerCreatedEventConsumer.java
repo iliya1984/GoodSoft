@@ -33,7 +33,7 @@ public class CustomerCreatedEventConsumer
 
         _repository.save(customer);
 
-        var customers = _repository.findAll();
+        //var customers = _repository.findAll();
 
         latch.countDown();
     }
