@@ -7,6 +7,10 @@ import lombok.Setter;
 
 public class LoggingConfiguration
 {
+    @Getter
+    @Setter
+    private String serviceName;
+
     @JsonProperty("messageBroker")
     @Getter
     @Setter
