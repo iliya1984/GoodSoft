@@ -23,11 +23,14 @@ public class MicroserviceResponseEntityExceptionHandler extends ResponseEntityEx
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleExceptions(Exception exception, WebRequest webRequest) {
 
+        var correlationId = webRequest.getHeader("GS-CorrelationId");
+
         logError(exception);
 
         var response = new ExceptionResponse();
         response.setDateTime(LocalDateTime.now());
         response.setMessage(exception.getMessage());
+        response.setCorrelationId(correlationId);
 
         ResponseEntity<Object> entity = new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         return entity;

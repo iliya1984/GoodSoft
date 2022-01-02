@@ -1,9 +1,9 @@
-package com.goodsoft.infra.modulecore.configuration;
+package com.goodsoft.infra.modulecore.logging.models;
 
 import lombok.Getter;
 import lombok.Setter;
 
-public class HttpContextConfiguration
+public class RequestMetadata
 {
     @Getter
     @Setter

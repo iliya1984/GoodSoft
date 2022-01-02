@@ -5,10 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4b360ad5-5937-4e78-be9f-a86ef310c81c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../modulecore/src/main/java/com/goodsoft/infra/modulecore/configuration/HttpContextConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../modulecore/src/main/java/com/goodsoft/infra/modulecore/ApplicationConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../modulecore/src/main/java/com/goodsoft/infra/modulecore/ApplicationConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../microservice/src/main/java/com/goodsoft/infra/microservice/MicroserviceApplicationConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../modulecore/src/main/java/com/goodsoft/infra/modulecore/ModuleCoreApplicationConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../microservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../microservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../microservice/src/main/java/com/goodsoft/infra/microservice/errorhandling/ExceptionResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../microservice/src/main/java/com/goodsoft/infra/microservice/errorhandling/ExceptionResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../microservice/src/main/java/com/goodsoft/infra/microservice/errorhandling/MicroserviceResponseEntityExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../microservice/src/main/java/com/goodsoft/infra/microservice/errorhandling/MicroserviceResponseEntityExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../modulecore/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../modulecore/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../modulecore/src/main/java/com/goodsoft/infra/modulecore/ApplicationConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../modulecore/src/main/java/com/goodsoft/infra/modulecore/configuration/HttpContextConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../modulecore/src/main/java/com/goodsoft/infra/modulecore/logging/models/RequestMetadata.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../modulecore/src/main/java/com/goodsoft/infra/modulecore/logging/implementations/AsyncLogger.java" beforeDir="false" afterPath="$PROJECT_DIR$/../modulecore/src/main/java/com/goodsoft/infra/modulecore/logging/implementations/AsyncLogger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../modulecore/src/main/java/com/goodsoft/infra/modulecore/logging/implementations/LoggerConfigurationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../modulecore/src/main/java/com/goodsoft/infra/modulecore/logging/implementations/LoggerConfigurationManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Microservices/customers-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Microservices/customers-service/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Microservices/customers-service/src/main/java/com/goodsoft/customersservice/logic/createcustomer/CreateCustomerCommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Microservices/customers-service/src/main/java/com/goodsoft/customersservice/logic/createcustomer/CreateCustomerCommandHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,7 +35,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Microservices/customers-service" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
