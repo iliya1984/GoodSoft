@@ -4,18 +4,28 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.goodsoft.infra.modulecore.configuration.ConfigurationSection;
 import com.goodsoft.infra.modulecore.configuration.IConfigurationManager;
+import com.goodsoft.infra.modulecore.logging.abstractions.ILogger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+@Service
 public class ConfigurationManager implements IConfigurationManager<CustomerServiceConfiguration>
 {
     private CustomerServiceConfiguration _section;
+    private ILogger _logger;
 
     @Autowired
     private Environment _environment;
+
+    public ConfigurationManager(ILogger logger)
+    {
+        _logger = logger;
+    }
 
     @Override
     public CustomerServiceConfiguration getConfiguration()

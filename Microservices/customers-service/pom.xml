@@ -83,7 +83,7 @@
 		<dependency>
 			<groupId>com.goodsoft.infra.modulecore</groupId>
 			<artifactId>modulecore</artifactId>
-			<version>1.0.1</version>
+			<version>1.0.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>

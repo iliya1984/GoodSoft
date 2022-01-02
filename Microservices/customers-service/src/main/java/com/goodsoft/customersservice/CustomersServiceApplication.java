@@ -23,12 +23,6 @@ public class CustomersServiceApplication {
 	}
 
 	@Bean
-	public IConfigurationManager<CustomerServiceConfiguration> configurationManager()
-	{
-		return new ConfigurationManager();
-	}
-
-	@Bean
 	public CustomerServiceConfiguration configuration(IConfigurationManager<CustomerServiceConfiguration> configurationManager)
 	{
 		return configurationManager.getConfiguration();

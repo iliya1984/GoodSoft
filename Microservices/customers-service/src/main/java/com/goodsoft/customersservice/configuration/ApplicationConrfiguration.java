@@ -1,5 +1,7 @@
 package com.goodsoft.customersservice.configuration;
 
+import com.goodsoft.infra.modulecore.logging.abstractions.ILogger;
+import com.goodsoft.infra.modulecore.logging.implementations.AsyncLogger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
