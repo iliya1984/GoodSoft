@@ -1,5 +1,6 @@
 package com.goodsoft.infra.modulecore.logging.implementations;
 
+import com.goodsoft.infra.modulecore.configuration.IConfigurationManager;
 import com.goodsoft.infra.modulecore.logging.abstractions.ILoggerMessageProducer;
 import com.goodsoft.infra.modulecore.logging.models.LogRecord;
 import com.goodsoft.infra.modulecore.logging.models.LogRecordMessage;
@@ -15,10 +16,10 @@ public class LoggerMessageProducer implements ILoggerMessageProducer
     private AmqpTemplate _rabbitTemplate;
     private LoggingConfiguration _configuration;
 
-    public LoggerMessageProducer(LoggingConfiguration configuration, AmqpTemplate rabbitMQTemplate)
+    public LoggerMessageProducer(IConfigurationManager<LoggingConfiguration> loggingConfigurationManager, AmqpTemplate rabbitMQTemplate)
     {
         _rabbitTemplate = rabbitMQTemplate;
-        _configuration = configuration;
+        _configuration = loggingConfigurationManager.getConfiguration();
     }
 
     public void notifyRecordCreated(LogRecord record)

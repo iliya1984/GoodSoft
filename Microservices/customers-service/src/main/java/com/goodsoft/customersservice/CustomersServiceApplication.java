@@ -7,24 +7,14 @@ import com.goodsoft.infra.modulecore.configuration.IConfigurationManager;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+//@ComponentScan({"com.goodsoft.infra.modulecore"})
 public class CustomersServiceApplication {
 
 	public static void main(String[] args)
 	{
 		SpringApplication.run(CustomersServiceApplication.class, args);
-	}
-
-	@Bean
-	public IPipelineFactory pipelineFactory()
-	{
-		return new PipelineFactory();
-	}
-
-	@Bean
-	public CustomerServiceConfiguration configuration(IConfigurationManager<CustomerServiceConfiguration> configurationManager)
-	{
-		return configurationManager.getConfiguration();
 	}
 }

@@ -1,5 +1,6 @@
 package com.goodsoft.infra.modulecore.logging.implementations;
 
+import com.goodsoft.infra.modulecore.configuration.IConfigurationManager;
 import com.goodsoft.infra.modulecore.logging.abstractions.ILogger;
 import com.goodsoft.infra.modulecore.logging.abstractions.ILoggerMessageProducer;
 import com.goodsoft.infra.modulecore.logging.enums.LogLevel;
@@ -17,10 +18,10 @@ public class AsyncLogger implements ILogger
     private ILoggerMessageProducer _producer;
     private LoggingConfiguration _configuration;
 
-    public AsyncLogger(ILoggerMessageProducer producer, LoggingConfiguration configuration)
+    public AsyncLogger(ILoggerMessageProducer producer, IConfigurationManager<LoggingConfiguration> loggingConfigurationManager)
     {
         _producer = producer;
-        _configuration = configuration;
+        _configuration = loggingConfigurationManager.getConfiguration();
     }
 
     public void logError(String error)

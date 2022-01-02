@@ -30,7 +30,7 @@ public class ApplicationConfiguration
     }
 
     @Bean
-    public LoggingConfiguration configuration(IConfigurationManager<LoggingConfiguration> configurationManager)
+    public LoggingConfiguration loggingConfiguration(IConfigurationManager<LoggingConfiguration> configurationManager)
     {
         return configurationManager.getConfiguration();
     }

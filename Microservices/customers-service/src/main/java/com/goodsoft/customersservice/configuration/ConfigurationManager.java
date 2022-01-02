@@ -14,18 +14,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @Service
-public class ConfigurationManager implements IConfigurationManager<CustomerServiceConfiguration>
+public class ConfigurationManager implements ICustomersConfigurationManager
 {
     private CustomerServiceConfiguration _section;
-    private ILogger _logger;
 
     @Autowired
     private Environment _environment;
-
-    public ConfigurationManager(ILogger logger)
-    {
-        _logger = logger;
-    }
 
     @Override
     public CustomerServiceConfiguration getConfiguration()

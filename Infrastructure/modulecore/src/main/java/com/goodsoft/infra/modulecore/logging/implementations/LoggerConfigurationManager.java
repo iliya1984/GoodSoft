@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono;
 @Service
 public class LoggerConfigurationManager implements IConfigurationManager<LoggingConfiguration>
 {
-    private LoggingConfiguration _section;
+    private static LoggingConfiguration _section;
 
     @Autowired
     private Environment _environment;
@@ -76,9 +76,6 @@ public class LoggerConfigurationManager implements IConfigurationManager<Logging
                 }
 
             }
-
-
-
         }
 
         return _section;
