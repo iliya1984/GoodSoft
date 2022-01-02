@@ -2,6 +2,7 @@ package com.goodsoft.customersservice.configuration;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.goodsoft.infra.modulecore.configuration.ConfigurationSection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class ConfigurationManager implements IConfigurationManager
             {
                 if (response.statusCode().equals(HttpStatus.OK))
                 {
-                    return response.bodyToMono(ConfigurationDto.class);
+                    return response.bodyToMono(ConfigurationSection.class);
                 }
                 else
                 {

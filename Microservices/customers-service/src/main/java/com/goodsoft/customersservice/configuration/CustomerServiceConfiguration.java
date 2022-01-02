@@ -1,6 +1,10 @@
 package com.goodsoft.customersservice.configuration;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.goodsoft.infra.modulecore.configuration.DatasourceConfiguration;
+import com.goodsoft.infra.modulecore.configuration.MessageBrokerConfiguration;
+import com.goodsoft.infra.modulecore.configuration.MessageRoutingItem;
+import com.goodsoft.infra.modulecore.configuration.SearchServerConfiguration;
 import lombok.Getter;
 import lombok.Setter;
 
