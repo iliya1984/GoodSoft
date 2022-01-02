@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Locale;
 
 public class MessageBrokerConfiguration
 {
@@ -18,4 +19,19 @@ public class MessageBrokerConfiguration
     @JsonProperty("routing")
     private List<MessageRoutingItem> routingItems;
 
+    public MessageRoutingItem findMessageRoutingByName(String name)
+    {
+
+        var routing = getRoutingItems();
+        if(routing == null || routing.isEmpty())
+        {
+            return null;
+        }
+
+        var routingItem = routing.stream()
+                .filter(ri -> ri.getAction() != null && ri.getAction().toLowerCase(Locale.ROOT).equals(name))
+                .findFirst();
+
+        return routingItem.get();
+    }
 }

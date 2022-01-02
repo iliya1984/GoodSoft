@@ -1,7 +1,11 @@
 package com.goodsoft.infra.modulecore;
 
+import com.goodsoft.infra.modulecore.configuration.IConfigurationManager;
+import com.goodsoft.infra.modulecore.logging.abstractions.ILoggerMessageProducer;
 import com.goodsoft.infra.modulecore.logging.implementations.AsyncLogger;
 import com.goodsoft.infra.modulecore.logging.abstractions.ILogger;
+import com.goodsoft.infra.modulecore.logging.implementations.LoggerMessageProducer;
+import com.goodsoft.infra.modulecore.logging.models.LoggingConfiguration;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,8 +30,8 @@ public class ApplicationConfiguration
     }
 
     @Bean
-    public ILogger logger()
+    public LoggingConfiguration configuration(IConfigurationManager<LoggingConfiguration> configurationManager)
     {
-        return new AsyncLogger();
+        return configurationManager.getConfiguration();
     }
 }

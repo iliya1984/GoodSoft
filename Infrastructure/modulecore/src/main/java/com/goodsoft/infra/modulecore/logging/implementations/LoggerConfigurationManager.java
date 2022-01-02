@@ -3,14 +3,17 @@ package com.goodsoft.infra.modulecore.logging.implementations;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.goodsoft.infra.modulecore.configuration.ConfigurationSection;
+import com.goodsoft.infra.modulecore.configuration.IConfigurationManager;
 import com.goodsoft.infra.modulecore.logging.models.LoggingConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-public class LoggerConfigurationManager
+@Service
+public class LoggerConfigurationManager implements IConfigurationManager<LoggingConfiguration>
 {
     private LoggingConfiguration _section;
 
@@ -22,9 +25,9 @@ public class LoggerConfigurationManager
         if(_section == null)
         {
             var baseUrl = _environment.getProperty("configuration-service-baseurl");
-            var domainName = _environment.getProperty("logging.domain.name");
-            var key = _environment.getProperty("logging.configuration.key");
-            var uri = "/domains/" + domainName + "/" + key;
+            var loggingDomainName = _environment.getProperty("logging.domain.name");
+            var loggingConfigurationKey = _environment.getProperty("logging.configuration.key");
+            var uri = "/domains/" + loggingDomainName + "/" + loggingConfigurationKey;
 
             var client = WebClient.create(baseUrl);
 
@@ -52,6 +55,18 @@ public class LoggerConfigurationManager
                     var value = configurationDto.getValue();
                     var objectMapper = new ObjectMapper();
                     var section = objectMapper.readValue(value, LoggingConfiguration.class);
+
+                    var domainName = _environment.getProperty("domain.name");
+                    if(domainName != null && false == domainName.isEmpty())
+                    {
+                        section.setLoggingDomainName(domainName);
+                    }
+                    var moduleName = _environment.getProperty("module.name");
+                    if(moduleName != null && false == moduleName.isEmpty())
+                    {
+                        section.setLoggingModuleName(moduleName);
+                    }
+
                     _section = section;
                 }
                 catch(JsonProcessingException ex)
@@ -59,7 +74,11 @@ public class LoggerConfigurationManager
                     int i = 1;
                     //TODO: Log error
                 }
+
             }
+
+
+
         }
 
         return _section;
