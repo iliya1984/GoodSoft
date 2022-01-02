@@ -6,7 +6,7 @@
 
     <groupId>com.goodsoft.infra.microservice</groupId>
     <artifactId>microservice</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
