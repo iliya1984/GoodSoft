@@ -1,4 +1,4 @@
-package com.goodsoft.infra.microservicecore.configuration;
+package com.goodsoft.infra.modulecore.configuration;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
