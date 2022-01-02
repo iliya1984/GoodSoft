@@ -3,13 +3,14 @@ package com.goodsoft.customersservice.configuration;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.goodsoft.infra.modulecore.configuration.ConfigurationSection;
+import com.goodsoft.infra.modulecore.configuration.IConfigurationManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-public class ConfigurationManager implements IConfigurationManager
+public class ConfigurationManager implements IConfigurationManager<CustomerServiceConfiguration>
 {
     private CustomerServiceConfiguration _section;
 
@@ -17,7 +18,7 @@ public class ConfigurationManager implements IConfigurationManager
     private Environment _environment;
 
     @Override
-    public CustomerServiceConfiguration GetConfiguration()
+    public CustomerServiceConfiguration getConfiguration()
     {
         if(_section == null)
         {

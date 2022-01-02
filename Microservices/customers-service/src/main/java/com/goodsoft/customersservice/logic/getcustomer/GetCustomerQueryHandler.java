@@ -2,7 +2,6 @@ package com.goodsoft.customersservice.logic.getcustomer;
 
 import an.awesome.pipelinr.Command;
 import com.goodsoft.customersservice.configuration.CustomerServiceConfiguration;
-import com.goodsoft.customersservice.configuration.IConfigurationManager;
 import com.goodsoft.infra.mediator.annotations.RequestHanlder;
 import com.goodsoft.interfaces.customers.models.customers.CustomerEmailModel;
 import com.goodsoft.interfaces.customers.models.customers.CustomerModel;

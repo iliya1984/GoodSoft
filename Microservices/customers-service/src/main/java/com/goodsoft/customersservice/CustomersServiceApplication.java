@@ -1,9 +1,9 @@
 package com.goodsoft.customersservice;
 import com.goodsoft.customersservice.configuration.ConfigurationManager;
 import com.goodsoft.customersservice.configuration.CustomerServiceConfiguration;
-import com.goodsoft.customersservice.configuration.IConfigurationManager;
 import com.goodsoft.infra.mediator.factory.IPipelineFactory;
 import com.goodsoft.infra.mediator.factory.PipelineFactory;
+import com.goodsoft.infra.modulecore.configuration.IConfigurationManager;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -23,14 +23,14 @@ public class CustomersServiceApplication {
 	}
 
 	@Bean
-	public IConfigurationManager configurationManager()
+	public IConfigurationManager<CustomerServiceConfiguration> configurationManager()
 	{
 		return new ConfigurationManager();
 	}
 
 	@Bean
-	public CustomerServiceConfiguration configuration(IConfigurationManager configurationManager)
+	public CustomerServiceConfiguration configuration(IConfigurationManager<CustomerServiceConfiguration> configurationManager)
 	{
-		return configurationManager.GetConfiguration();
+		return configurationManager.getConfiguration();
 	}
 }
