@@ -1,5 +1,6 @@
 package com.goodsoft.infra.microservice.errorhandling;
 
+import com.goodsoft.infra.modulecore.logging.abstractions.ILogger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,14 +13,28 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class MicroserviceResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
+    private ILogger _logger;
+
+    public MicroserviceResponseEntityExceptionHandler(ILogger logger)
+    {
+        _logger = logger;
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleExceptions(Exception exception, WebRequest webRequest) {
 
+        logError(exception);
+
         var response = new ExceptionResponse();
         response.setDateTime(LocalDateTime.now());
-        response.setMessage("Internal Server Error");
+        response.setMessage(exception.getMessage());
 
         ResponseEntity<Object> entity = new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         return entity;
+    }
+
+    private void logError(Exception exception)
+    {
+        _logger.logError(exception);
     }
 }

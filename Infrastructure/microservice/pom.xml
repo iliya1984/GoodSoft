@@ -23,6 +23,11 @@
             <artifactId>mediator</artifactId>
             <version>1.0.3</version>
         </dependency>
+        <dependency>
+            <groupId>com.goodsoft.infra.modulecore</groupId>
+            <artifactId>modulecore</artifactId>
+            <version>1.0.6</version>
+        </dependency>
     </dependencies>
     <properties>
         <maven.compiler.source>16</maven.compiler.source>

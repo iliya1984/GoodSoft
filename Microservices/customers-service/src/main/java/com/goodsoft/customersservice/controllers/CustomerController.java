@@ -63,19 +63,12 @@ public class CustomerController extends RestService implements ICustomersService
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> create(@RequestBody CreateCustomerModel model)
     {
-        try
-        {
-            var request = new CreateCustomerCommand();
-            request.setModel(model);
+        var request = new CreateCustomerCommand();
+        request.setModel(model);
 
-            var pipeline = _pipelineFactory.getPipeline(request);
-            var customer = pipeline.send(request);
+        var pipeline = _pipelineFactory.getPipeline(request);
+        var customer = pipeline.send(request);
 
-            return new ResponseEntity(customer, HttpStatus.CREATED);
-        }
-        catch(Exception ex)
-        {
-            return exceptionResponse(ex);
-        }
+        return new ResponseEntity(customer, HttpStatus.CREATED);
     }
 }
