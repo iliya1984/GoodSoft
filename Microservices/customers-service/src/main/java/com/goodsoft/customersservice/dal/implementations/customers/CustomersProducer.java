@@ -3,7 +3,9 @@ package com.goodsoft.customersservice.dal.implementations.customers;
 import com.goodsoft.customersservice.configuration.CustomerServiceConfiguration;
 import com.goodsoft.customersservice.dal.abstractions.customers.ICustomersProducer;
 import com.goodsoft.customersservice.entities.customers.CustomerEntity;
+import com.goodsoft.infra.modulecore.logging.models.RequestMetadata;
 import com.goodsoft.interfaces.customers.models.customermessages.CustomerCreatedMessage;
+import com.goodsoft.interfaces.customers.models.customermessages.MessageMetadata;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +16,16 @@ public class CustomersProducer implements ICustomersProducer
 
     private AmqpTemplate _rabbitTemplate;
     private CustomerServiceConfiguration _configuration;
+    private RequestMetadata _requestMetadata;
 
-    public CustomersProducer(CustomerServiceConfiguration configuration, AmqpTemplate rabbitMQTemplate)
+    public CustomersProducer(
+            CustomerServiceConfiguration configuration,
+            AmqpTemplate rabbitMQTemplate,
+            RequestMetadata requestMetadata)
     {
         _rabbitTemplate = rabbitMQTemplate;
         _configuration = configuration;
+        _requestMetadata = requestMetadata;
     }
 
     public void notifyCustomerCreated(CustomerEntity customer)
@@ -36,6 +43,11 @@ public class CustomersProducer implements ICustomersProducer
                 message.setEmail(primaryEmail.get().getEmail());
             }
         }
+
+        var metadata = new MessageMetadata();
+        metadata.setCorrelationId(_requestMetadata.getCorrelationId());
+
+        message.setMetadata(metadata);
 
         var messageRouting = _configuration.findMessageRoutingByName(Action);
         if(messageRouting != null)

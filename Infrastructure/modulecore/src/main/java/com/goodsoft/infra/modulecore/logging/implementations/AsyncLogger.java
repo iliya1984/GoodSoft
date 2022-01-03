@@ -85,10 +85,14 @@ public class AsyncLogger implements ILogger
         String correlationId = null;
         if(_options == null || _options.getCorrelationId() == null)
         {
-            var requestMetadata = (RequestMetadata)context.getBean("requestMetadata");
-            if(requestMetadata != null)
+            try
             {
+                var requestMetadata = (RequestMetadata)context.getBean("requestMetadata");
                 correlationId = requestMetadata.getCorrelationId();
+            }
+            catch (Exception ex)
+            {
+
             }
         }
         else

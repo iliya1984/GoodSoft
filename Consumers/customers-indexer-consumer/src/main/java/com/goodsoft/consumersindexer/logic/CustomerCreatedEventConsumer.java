@@ -26,7 +26,8 @@ public class CustomerCreatedEventConsumer
 
     private CountDownLatch latch = new CountDownLatch(1);
 
-    public void receiveMessage(CustomerCreatedMessage message) throws Exception {
+    public void receiveMessage(CustomerCreatedMessage message)
+    {
         try
         {
             var customer = new CustomerEntry();
@@ -42,13 +43,14 @@ public class CustomerCreatedEventConsumer
             _repository.save(customer);
 
             //var customers = _repository.findAll();
-
-            latch.countDown();
         }
         catch (Exception ex)
         {
             createLogger(message).logError(ex);
-            throw ex;
+        }
+        finally
+        {
+            latch.countDown();
         }
     }
 
