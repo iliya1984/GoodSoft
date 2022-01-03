@@ -28,6 +28,8 @@ public class LogRecordConsumer
 
         if(false == file.exists())
         {
+            file.getParentFile().getParentFile().mkdir();
+            file.getParentFile().mkdir();
             file.createNewFile();
         }
 
@@ -42,7 +44,7 @@ public class LogRecordConsumer
     private String createFilePath(LogRecordMessage message)
     {
         var date = new Date(System.currentTimeMillis());
-        var formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        var formatter = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
 
         var fileNameSyfix = formatter.format(date);
         if(message != null && message.getMetadata() != null)
@@ -58,7 +60,7 @@ public class LogRecordConsumer
 
         var dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        var filePath = outputDirectory + "\\" + dateFormatter.format(date) + "\\Logs_" + fileNameSyfix;
+        var filePath = outputDirectory + "\\" + dateFormatter.format(date) + "\\Logs_" + fileNameSyfix + ".json";
         return filePath;
     }
 

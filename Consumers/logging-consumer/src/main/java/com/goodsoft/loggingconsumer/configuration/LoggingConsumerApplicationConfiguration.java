@@ -11,18 +11,13 @@ import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-public class ApplicationConfiguration
+@Configuration
+public class LoggingConsumerApplicationConfiguration
 {
     @Bean
-    Queue queue(String queueName)
-    {
-        return new Queue(queueName, false);
-    }
-
-    //create MessageListenerContainer using default connection factory
-    @Bean
-    MessageListenerContainer messageListenerContainer(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter, IConfigurationManager<LoggingConfiguration> loggingConfigurationManager)
+    Queue queue(IConfigurationManager<LoggingConfiguration> loggingConfigurationManager)
     {
         var queueName = "logging-record-created-queue";
         var configuration = loggingConfigurationManager.getConfiguration();
@@ -36,13 +31,19 @@ public class ApplicationConfiguration
             }
         }
 
+        return new Queue(queueName, false);
+    }
+
+    //create MessageListenerContainer using default connection factory
+    @Bean
+    MessageListenerContainer messageListenerContainer(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter, IConfigurationManager<LoggingConfiguration> loggingConfigurationManager)
+    {
         var listenerContainer = new SimpleMessageListenerContainer();
         listenerContainer.setConnectionFactory(connectionFactory);
-        listenerContainer.setQueues(queue(queueName));
+        listenerContainer.setQueues(queue(loggingConfigurationManager));
         listenerContainer.setMessageListener(listenerAdapter);
 
         return listenerContainer;
-
     }
 
     @Bean
