@@ -1,6 +1,7 @@
 package com.goodsoft.consumersindexer.configuration;
 
 import com.goodsoft.consumersindexer.logic.CustomerCreatedEventConsumer;
+import com.goodsoft.infra.modulecore.configuration.IConfigurationManager;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -21,21 +22,35 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 @Configuration
 @EnableElasticsearchRepositories(basePackages = "com.baeldung.spring.data.es.repository")
 @ComponentScan(basePackages = { "com.baeldung.spring.data.es.service" })
-public class ApplicationConfiguration
+public class CustomersConsumerApplicationConfiguration
 {
 
+
     @Bean
-    Queue queue() {
-        return new Queue("customers-customer-created-queue", false);
+    Queue queue(IConfigurationManager<CustomersConsumerConfiguration> configurationManager)
+    {
+        var queueName = "customers-customer-created-queue";
+        var configuration = configurationManager.getConfiguration();
+        var messageBroker = configuration.getMessageBroker();
+        if(messageBroker != null)
+        {
+            var routingItem = messageBroker.findMessageRoutingByName("customercreate");
+            if(routingItem != null)
+            {
+                queueName = routingItem.getQueue();
+            }
+        }
+
+        return new Queue(queueName, false);
     }
 
     //create MessageListenerContainer using default connection factory
     @Bean
-    MessageListenerContainer messageListenerContainer(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter)
+    MessageListenerContainer messageListenerContainer(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter, IConfigurationManager<CustomersConsumerConfiguration> configurationManager)
     {
         var listenerContainer = new SimpleMessageListenerContainer();
         listenerContainer.setConnectionFactory(connectionFactory);
-        listenerContainer.setQueues(queue());
+        listenerContainer.setQueues(queue(configurationManager));
         listenerContainer.setMessageListener(listenerAdapter);
 
         return listenerContainer;

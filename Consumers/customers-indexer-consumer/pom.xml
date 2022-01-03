@@ -32,10 +32,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.goodsoft.interfaces.customers</groupId>
             <artifactId>customers</artifactId>
             <version>1.0.7</version>
@@ -48,17 +44,12 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-elasticsearch</artifactId>
-            <version>4.0.0.RELEASE</version>
+            <version>4.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.goodsoft.infra.modulecore</groupId>
+            <artifactId>modulecore</artifactId>
+            <version>1.0.8</version>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-         <!--   <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>-->
-        </plugins>
-    </build>
-
 </project>

@@ -27,4 +27,55 @@
       ]
     }
   }
+},{
+  "_id": {
+    "$oid": "61d19f0439eb8e800b8df925"
+  },
+  "key": {
+    "$oid": "61d19f0439eb8e800b8df925"
+  },
+  "domainName": "logging",
+  "value": {
+    "serviceName": "loggingconsumer",
+    "messageBroker": {
+      "type": "RabbitMQ",
+      "routing": [
+        {
+          "exchange": "logging-record-created",
+          "action": "recordcreated",
+          "queue": "logging-record-created-queue"
+        }
+      ]
+    }
+  }
+},{
+  "_id": {
+    "$oid": "61d32d0fcadd457843f25003"
+  },
+  "key": {
+    "$oid": "61d32d0fcadd457843f25003"
+  },
+  "domainName": "customers",
+  "value": {
+    "serviceName": "customersconsumer",
+    "dataSource": {
+      "type": "MongoDB",
+      "connectionString": "mongodb://localhost:27017/",
+      "user": "admin"
+    },
+    "searchServer": {
+      "host": "localhost",
+      "port": "9200"
+    },
+    "messageBroker": {
+      "type": "RabbitMQ",
+      "routing": [
+        {
+          "exchange": "customers-customer-created",
+          "action": "customercreate",
+          "queue": "customers-customer-created-queue"
+        }
+      ]
+    }
+  }
 }]
