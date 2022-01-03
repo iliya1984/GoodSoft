@@ -5,11 +5,17 @@ import com.goodsoft.infra.modulecore.logging.models.LogRecordMetadata;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 public class LogRecordEntry
 {
     @Getter
     @Setter
     private String correlationId;
+
+    @Getter
+    @Setter
+    private String dateCreated;
 
     @Getter
     @Setter
