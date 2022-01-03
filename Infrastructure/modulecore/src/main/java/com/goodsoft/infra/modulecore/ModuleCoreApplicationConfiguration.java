@@ -9,8 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Configuration
 public class ModuleCoreApplicationConfiguration
 {

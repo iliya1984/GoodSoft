@@ -22,4 +22,9 @@ public class MessageRoutingItem
     @Setter
     @JsonProperty("routingKey")
     private String routingKey;
+
+    @Getter
+    @Setter
+    @JsonProperty("queue")
+    private String queue;
 }
