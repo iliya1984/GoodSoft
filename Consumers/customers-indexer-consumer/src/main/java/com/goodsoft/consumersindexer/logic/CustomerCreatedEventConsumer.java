@@ -2,7 +2,12 @@ package com.goodsoft.consumersindexer.logic;
 
 import com.goodsoft.consumersindexer.dal.abstractions.ICustomersRepository;
 import com.goodsoft.consumersindexer.models.CustomerEntry;
+import com.goodsoft.infra.modulecore.logging.abstractions.ILogger;
+import com.goodsoft.infra.modulecore.logging.abstractions.ILoggerFactory;
 import com.goodsoft.interfaces.customers.models.customermessages.CustomerCreatedMessage;
+import com.goodsoft.interfaces.customers.models.customermessages.MessageBase;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CountDownLatch;
@@ -11,31 +16,52 @@ import java.util.concurrent.CountDownLatch;
 public class CustomerCreatedEventConsumer
 {
     private ICustomersRepository _repository;
+    private ILoggerFactory _loggerFactory;
 
-    public CustomerCreatedEventConsumer(ICustomersRepository repository)
+    public CustomerCreatedEventConsumer(ICustomersRepository repository, ILoggerFactory loggerFactory)
     {
         _repository = repository;
+        _loggerFactory = loggerFactory;
     }
 
     private CountDownLatch latch = new CountDownLatch(1);
 
-    public void receiveMessage(CustomerCreatedMessage message)
-    {
-        var customer = new CustomerEntry();
-        customer.setFirstName(message.getFirstName());
-        customer.setLastName(message.getLastName());
-
-        var id = message.getId();
-        if(id != null)
+    public void receiveMessage(CustomerCreatedMessage message) throws Exception {
+        try
         {
-            customer.setCustomerId(id.toString());
+            var customer = new CustomerEntry();
+            customer.setFirstName(message.getFirstName());
+            customer.setLastName(message.getLastName());
+
+            var id = message.getId();
+            if(id != null)
+            {
+                customer.setCustomerId(id.toString());
+            }
+
+            _repository.save(customer);
+
+            //var customers = _repository.findAll();
+
+            latch.countDown();
+        }
+        catch (Exception ex)
+        {
+            createLogger(message).logError(ex);
+            throw ex;
+        }
+    }
+
+    private ILogger createLogger(MessageBase message)
+    {
+        String correlationId = null;
+        if(message.getMetadata() != null)
+        {
+            correlationId = message.getMetadata().getCorrelationId();
         }
 
-        _repository.save(customer);
-
-        //var customers = _repository.findAll();
-
-        latch.countDown();
+        var logger = _loggerFactory.create(correlationId);
+        return logger;
     }
 
     public CountDownLatch getLatch() {

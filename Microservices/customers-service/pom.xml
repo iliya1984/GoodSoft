@@ -78,7 +78,7 @@
 		<dependency>
 			<groupId>com.goodsoft.interfaces.customers</groupId>
 			<artifactId>customers</artifactId>
-			<version>1.0.7</version>
+			<version>1.0.8</version>
 		</dependency>
 		<dependency>
 			<groupId>com.goodsoft.infra.modulecore</groupId>

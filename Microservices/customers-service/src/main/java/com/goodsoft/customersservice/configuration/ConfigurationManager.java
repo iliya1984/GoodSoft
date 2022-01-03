@@ -17,9 +17,15 @@ import reactor.core.publisher.Mono;
 public class ConfigurationManager implements ICustomersConfigurationManager
 {
     private CustomerServiceConfiguration _section;
+    private ILogger _logger;
 
     @Autowired
     private Environment _environment;
+
+    public ConfigurationManager(ILogger logger)
+    {
+        _logger = logger;
+    }
 
     @Override
     public CustomerServiceConfiguration getConfiguration()
@@ -61,8 +67,7 @@ public class ConfigurationManager implements ICustomersConfigurationManager
                 }
                 catch(JsonProcessingException ex)
                 {
-                    int i = 1;
-                   //TODO: Log error
+                    _logger.logError(ex);
                 }
             }
         }
