@@ -16,4 +16,9 @@ public class Message<T>
     @Getter
     @Setter
     private T data;
+
+    public Message()
+    {
+        setMetadata(new MessageMetadata());
+    }
 }

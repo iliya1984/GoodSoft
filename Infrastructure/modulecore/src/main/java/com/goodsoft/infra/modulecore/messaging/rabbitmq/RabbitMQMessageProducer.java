@@ -5,6 +5,7 @@ import com.goodsoft.infra.modulecore.messaging.abstractions.IMessageProducer;
 import com.goodsoft.infra.modulecore.messaging.entities.Message;
 import com.goodsoft.infra.modulecore.messaging.entities.MessageSendResult;
 import com.goodsoft.infra.modulecore.messaging.enums.MessageSendStatusCode;
+import lombok.SneakyThrows;
 import org.springframework.amqp.core.AmqpTemplate;
 
 import java.util.UUID;
@@ -20,6 +21,7 @@ public class RabbitMQMessageProducer implements IMessageProducer
         _configuration = configuration;
     }
 
+    @SneakyThrows
     public <T> MessageSendResult send(Message<T> message)
     {
         var result = new MessageSendResult();
@@ -30,6 +32,17 @@ public class RabbitMQMessageProducer implements IMessageProducer
         result.setStatus(MessageSendStatusCode.Failure);
 
         var metadata = message.getMetadata();
+
+        if(metadata == null)
+        {
+            throw new Exception("Unable to send message, message metadata was not set");
+        }
+
+        var action = metadata.getAction();
+        if(action == null || action == "")
+        {
+            throw new Exception("Unable to send message, message action was not set");
+        }
 
         var messageRouting = _configuration.findMessageRoutingByName(metadata.getAction());
         if(messageRouting != null)
