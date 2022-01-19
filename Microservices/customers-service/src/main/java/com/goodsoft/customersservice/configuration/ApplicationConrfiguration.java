@@ -31,36 +31,6 @@ public class ApplicationConrfiguration {
     }
 
     @Bean
-    public MessageConverter jsonMessageConverter() {
-        return new Jackson2JsonMessageConverter();
-    }
-
-    @Bean
-    public ConnectionFactory  rabbitMQConnectionFactory(MessageBrokerConfiguration messageBrokerConfiguration) throws Exception {
-
-        var connectionString = messageBrokerConfiguration.getConnectionString();
-        if(messageBrokerConfiguration == null)
-        {
-            throw new Exception("Unable to create RabbitMQ configuration factory. Message broker connection string not found");
-        }
-
-        return new CachingConnectionFactory(connectionString);
-    }
-
-    @Bean
-    public IMessageProducer messageProducer(AmqpTemplate rabbitMQTemplate, MessageBrokerConfiguration messageBrokerConfiguration)
-    {
-        return new RabbitMQMessageProducer(rabbitMQTemplate, messageBrokerConfiguration);
-    }
-
-    @Bean
-    public AmqpTemplate rabbitMQTemplate(ConnectionFactory rabbitMQConnectionFactory) {
-        final RabbitTemplate rabbitTemplate = new RabbitTemplate(rabbitMQConnectionFactory);
-        rabbitTemplate.setMessageConverter(jsonMessageConverter());
-        return rabbitTemplate;
-    }
-
-    @Bean
     public IPipelineFactory pipelineFactory()
     {
         return new PipelineFactory();
