@@ -5,7 +5,7 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-public class CustomerCreatedMessage extends MessageBase
+public class CustomerCreatedMessage
 {
     @Getter
     @Setter

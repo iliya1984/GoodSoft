@@ -1,4 +1,4 @@
-package com.goodsoft.interfaces.customers.models.customermessages;
+package com.goodsoft.infra.modulecore.messaging.entities;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,4 +12,8 @@ public class MessageMetadata
     @Getter
     @Setter
     private String requestedBy;
+
+    @Getter
+    @Setter
+    private String action;
 }

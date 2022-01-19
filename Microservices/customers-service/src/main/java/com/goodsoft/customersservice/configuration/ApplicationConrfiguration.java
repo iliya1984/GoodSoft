@@ -2,9 +2,10 @@ package com.goodsoft.customersservice.configuration;
 
 import com.goodsoft.infra.mediator.factory.IPipelineFactory;
 import com.goodsoft.infra.mediator.factory.PipelineFactory;
-import com.goodsoft.infra.modulecore.configuration.IConfigurationManager;
-import com.goodsoft.infra.modulecore.logging.abstractions.ILogger;
-import com.goodsoft.infra.modulecore.logging.implementations.AsyncLogger;
+import com.goodsoft.infra.modulecore.configuration.MessageBrokerConfiguration;
+import com.goodsoft.infra.modulecore.messaging.abstractions.IMessageProducer;
+import com.goodsoft.infra.modulecore.messaging.rabbitmq.RabbitMQMessageProducer;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -35,8 +36,26 @@ public class ApplicationConrfiguration {
     }
 
     @Bean
-    public AmqpTemplate rabbitMQTemplate(ConnectionFactory connectionFactory) {
-        final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+    public ConnectionFactory  rabbitMQConnectionFactory(MessageBrokerConfiguration messageBrokerConfiguration) throws Exception {
+
+        var connectionString = messageBrokerConfiguration.getConnectionString();
+        if(messageBrokerConfiguration == null)
+        {
+            throw new Exception("Unable to create RabbitMQ configuration factory. Message broker connection string not found");
+        }
+
+        return new CachingConnectionFactory(connectionString);
+    }
+
+    @Bean
+    public IMessageProducer messageProducer(AmqpTemplate rabbitMQTemplate, MessageBrokerConfiguration messageBrokerConfiguration)
+    {
+        return new RabbitMQMessageProducer(rabbitMQTemplate, messageBrokerConfiguration);
+    }
+
+    @Bean
+    public AmqpTemplate rabbitMQTemplate(ConnectionFactory rabbitMQConnectionFactory) {
+        final RabbitTemplate rabbitTemplate = new RabbitTemplate(rabbitMQConnectionFactory);
         rabbitTemplate.setMessageConverter(jsonMessageConverter());
         return rabbitTemplate;
     }
@@ -47,14 +66,21 @@ public class ApplicationConrfiguration {
         return new PipelineFactory();
     }
 
-    @Bean ICustomersConfigurationManager customersConfigurationManager(ConfigurationManager configurationManager)
+    @Bean
+    public CustomerServiceConfiguration configuration(ICustomersConfigurationManager customersConfigurationManager)
     {
-        return configurationManager;
+        return customersConfigurationManager.getConfiguration();
     }
 
     @Bean
-    public CustomerServiceConfiguration configuration(IConfigurationManager<CustomerServiceConfiguration> customersConfigurationManager)
-    {
-        return customersConfigurationManager.getConfiguration();
+    public MessageBrokerConfiguration messageBrokerConfiguration(CustomerServiceConfiguration configuration) throws Exception {
+
+        var messageBrokerConfiguration = configuration.getMessageBroker();
+        if(messageBrokerConfiguration == null)
+        {
+            throw new Exception("Unable to create RabbitMQ configuration factory. Message broker configuration not found");
+        }
+
+        return messageBrokerConfiguration;
     }
 }

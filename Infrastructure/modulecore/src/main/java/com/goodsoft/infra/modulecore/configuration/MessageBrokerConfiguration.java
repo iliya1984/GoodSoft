@@ -11,6 +11,11 @@ public class MessageBrokerConfiguration
 {
     @Getter
     @Setter
+    @JsonProperty("connectionString")
+    private String connectionString;
+
+    @Getter
+    @Setter
     @JsonProperty("type")
     private String type;
 
