@@ -8,15 +8,19 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 
 public class ConfigurationServiceManager implements IConfigurationServiceManager
 {
+    @Autowired
+    private Environment _environment;
+
     @Override
     public DomainConfiguration getDomainConfiguration(DomainConfigurationRequest request) {
 
-        var connectionString = new ConnectionString(
-                "mongodb://localhost:27017/?authSource=admin"
-        );
+        var dbConnectionString = _environment.getProperty("db-connection-string") + "?authSource" + _environment.getProperty("db-user");
+        var connectionString = new ConnectionString(dbConnectionString);
 
         var settings = MongoClientSettings.builder()
                 .applyConnectionString(connectionString)
