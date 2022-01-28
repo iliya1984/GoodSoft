@@ -24,7 +24,11 @@ public class ModuleCoreApplicationConfiguration
 {
     @Bean
     public MessageConverter jsonMessageConverter() {
-        return new Jackson2JsonMessageConverter();
+
+        var converter = new Jackson2JsonMessageConverter();
+        converter.setAlwaysConvertToInferredType(true);
+
+        return converter;
     }
 
     @Bean

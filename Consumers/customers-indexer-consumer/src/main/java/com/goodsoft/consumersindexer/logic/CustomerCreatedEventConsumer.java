@@ -1,13 +1,13 @@
 package com.goodsoft.consumersindexer.logic;
 
 import com.goodsoft.consumersindexer.dal.abstractions.ICustomersRepository;
+import com.goodsoft.consumersindexer.models.CustmerCreatedMessageWrapper;
 import com.goodsoft.consumersindexer.models.CustomerEntry;
 import com.goodsoft.infra.modulecore.logging.abstractions.ILogger;
 import com.goodsoft.infra.modulecore.logging.abstractions.ILoggerFactory;
+import com.goodsoft.infra.modulecore.messaging.entities.Message;
 import com.goodsoft.interfaces.customers.models.customermessages.CustomerCreatedMessage;
-import com.goodsoft.interfaces.customers.models.customermessages.MessageBase;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CountDownLatch;
@@ -26,15 +26,17 @@ public class CustomerCreatedEventConsumer
 
     private CountDownLatch latch = new CountDownLatch(1);
 
-    public void receiveMessage(CustomerCreatedMessage message)
+    public void receiveMessage(Message<CustomerCreatedMessage> message)
     {
         try
         {
-            var customer = new CustomerEntry();
-            customer.setFirstName(message.getFirstName());
-            customer.setLastName(message.getLastName());
+            var customerMessage = message.getData();
 
-            var id = message.getId();
+            var customer = new CustomerEntry();
+            customer.setFirstName(customerMessage.getFirstName());
+            customer.setLastName(customerMessage.getLastName());
+
+            var id = customerMessage.getId();
             if(id != null)
             {
                 customer.setCustomerId(id.toString());
@@ -54,7 +56,7 @@ public class CustomerCreatedEventConsumer
         }
     }
 
-    private ILogger createLogger(MessageBase message)
+    private ILogger createLogger(Message<CustomerCreatedMessage> message)
     {
         String correlationId = null;
         if(message.getMetadata() != null)

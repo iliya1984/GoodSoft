@@ -14,19 +14,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @Service
-public class ConfigurationManager implements IConfigurationManager<CustomersConsumerConfiguration>
+public class CustomersConsumerConfigurationManager implements ICustomersConsumerConfigurationManager
 {
     private CustomersConsumerConfiguration _section;
-    private ILogger _logger;
 
     @Autowired
     private Environment _environment;
-
-
-    public ConfigurationManager(ILogger logger)
-    {
-        _logger = logger;
-    }
 
     @Override
     public CustomersConsumerConfiguration getConfiguration()
@@ -68,7 +61,8 @@ public class ConfigurationManager implements IConfigurationManager<CustomersCons
                 }
                 catch(JsonProcessingException ex)
                 {
-                   _logger.logError(ex);
+                    int  i = 1;
+                   //TODO: add logging
                 }
             }
         }

@@ -1,5 +1,6 @@
 package com.goodsoft.infra.modulecore.messaging.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,7 @@ public class Message<T>
 
     @Getter
     @Setter
+    @JsonProperty("data")
     private T data;
 
     public Message()

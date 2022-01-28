@@ -2,6 +2,7 @@ package com.goodsoft.consumersindexer.configuration;
 
 import com.goodsoft.consumersindexer.logic.CustomerCreatedEventConsumer;
 import com.goodsoft.infra.modulecore.configuration.IConfigurationManager;
+import com.goodsoft.infra.modulecore.configuration.MessageBrokerConfiguration;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -27,10 +28,10 @@ public class CustomersConsumerApplicationConfiguration
 
 
     @Bean
-    Queue queue(IConfigurationManager<CustomersConsumerConfiguration> configurationManager)
+    Queue queue(ICustomersConsumerConfigurationManager customersConsumerConfigurationManager)
     {
         var queueName = "customers-customer-created-queue";
-        var configuration = configurationManager.getConfiguration();
+        var configuration = customersConsumerConfigurationManager.getConfiguration();
         var messageBroker = configuration.getMessageBroker();
         if(messageBroker != null)
         {
@@ -46,11 +47,11 @@ public class CustomersConsumerApplicationConfiguration
 
     //create MessageListenerContainer using default connection factory
     @Bean
-    MessageListenerContainer messageListenerContainer(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter, IConfigurationManager<CustomersConsumerConfiguration> configurationManager)
+    MessageListenerContainer messageListenerContainer(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter, ICustomersConsumerConfigurationManager customersConsumerConfigurationManager)
     {
         var listenerContainer = new SimpleMessageListenerContainer();
         listenerContainer.setConnectionFactory(connectionFactory);
-        listenerContainer.setQueues(queue(configurationManager));
+        listenerContainer.setQueues(queue(customersConsumerConfigurationManager));
         listenerContainer.setMessageListener(listenerAdapter);
 
         return listenerContainer;
@@ -62,13 +63,6 @@ public class CustomersConsumerApplicationConfiguration
         var adapter = new MessageListenerAdapter(receiver, "receiveMessage");
         adapter.setMessageConverter(messageConverter);
         return adapter;
-    }
-
-    @Bean
-    public MessageConverter jsonMessageConverter(){
-        var converter = new Jackson2JsonMessageConverter();
-        converter.setAlwaysConvertToInferredType(false);
-        return converter;
     }
 
     @Bean
@@ -84,5 +78,18 @@ public class CustomersConsumerApplicationConfiguration
     @Bean
     public ElasticsearchOperations elasticsearchTemplate() {
         return new ElasticsearchRestTemplate(client());
+    }
+
+    @Bean
+    public MessageBrokerConfiguration messageBrokerConfiguration(ICustomersConsumerConfigurationManager customersConsumerConfigurationManager) throws Exception {
+
+        var configuration = customersConsumerConfigurationManager.getConfiguration();
+        var messageBrokerConfiguration = configuration.getMessageBroker();
+        if(messageBrokerConfiguration == null)
+        {
+            throw new Exception("Unable to create RabbitMQ configuration factory. Message broker configuration not found");
+        }
+
+        return messageBrokerConfiguration;
     }
 }
