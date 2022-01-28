@@ -19,7 +19,7 @@ public class ConfigurationServiceManager implements IConfigurationServiceManager
     @Override
     public DomainConfiguration getDomainConfiguration(DomainConfigurationRequest request) {
 
-        var dbConnectionString = _environment.getProperty("db-connection-string") + "?authSource" + _environment.getProperty("db-user");
+        var dbConnectionString = _environment.getProperty("db-connection-string") + "?authSource=" + _environment.getProperty("db-user");
         var connectionString = new ConnectionString(dbConnectionString);
 
         var settings = MongoClientSettings.builder()
