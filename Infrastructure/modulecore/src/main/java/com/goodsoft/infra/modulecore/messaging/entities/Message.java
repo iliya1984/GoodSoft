@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Message<T>
+import java.lang.reflect.ParameterizedType;
+
+public class Message
 {
     @Getter
     @Setter
@@ -16,8 +18,7 @@ public class Message<T>
 
     @Getter
     @Setter
-    @JsonProperty("data")
-    private T data;
+    private Object data;
 
     public Message()
     {

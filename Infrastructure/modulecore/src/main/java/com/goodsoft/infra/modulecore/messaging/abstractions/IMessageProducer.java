@@ -5,5 +5,5 @@ import com.goodsoft.infra.modulecore.messaging.entities.MessageSendResult;
 
 public interface IMessageProducer
 {
-    <T> MessageSendResult send(Message<T> message);
+    <T> MessageSendResult send(Message message);
 }

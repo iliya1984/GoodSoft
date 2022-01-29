@@ -8,6 +8,7 @@ import com.goodsoft.infra.modulecore.messaging.enums.MessageSendStatusCode;
 import lombok.SneakyThrows;
 import org.springframework.amqp.core.AmqpTemplate;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.UUID;
 
 public class RabbitMQMessageProducer implements IMessageProducer
@@ -22,7 +23,7 @@ public class RabbitMQMessageProducer implements IMessageProducer
     }
 
     @SneakyThrows
-    public <T> MessageSendResult send(Message<T> message)
+    public <T> MessageSendResult send(Message message)
     {
         var result = new MessageSendResult();
 

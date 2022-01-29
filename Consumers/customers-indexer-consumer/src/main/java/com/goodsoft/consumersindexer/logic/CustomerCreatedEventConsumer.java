@@ -1,5 +1,6 @@
 package com.goodsoft.consumersindexer.logic;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.goodsoft.consumersindexer.dal.abstractions.ICustomersRepository;
 import com.goodsoft.consumersindexer.models.CustmerCreatedMessageWrapper;
 import com.goodsoft.consumersindexer.models.CustomerEntry;
@@ -17,20 +18,22 @@ public class CustomerCreatedEventConsumer
 {
     private ICustomersRepository _repository;
     private ILoggerFactory _loggerFactory;
+    private ObjectMapper _mapper;
 
-    public CustomerCreatedEventConsumer(ICustomersRepository repository, ILoggerFactory loggerFactory)
+    public CustomerCreatedEventConsumer(ICustomersRepository repository, ObjectMapper mapper, ILoggerFactory loggerFactory)
     {
         _repository = repository;
         _loggerFactory = loggerFactory;
+        _mapper = mapper;
     }
 
     private CountDownLatch latch = new CountDownLatch(1);
 
-    public void receiveMessage(Message<CustomerCreatedMessage> message)
+    public void receiveMessage(Message message)
     {
         try
         {
-            var customerMessage = message.getData();
+            var customerMessage = _mapper.convertValue(message.getData(), CustomerCreatedMessage.class);
 
             var customer = new CustomerEntry();
             customer.setFirstName(customerMessage.getFirstName());
@@ -56,7 +59,7 @@ public class CustomerCreatedEventConsumer
         }
     }
 
-    private ILogger createLogger(Message<CustomerCreatedMessage> message)
+    private ILogger createLogger(Message message)
     {
         String correlationId = null;
         if(message.getMetadata() != null)

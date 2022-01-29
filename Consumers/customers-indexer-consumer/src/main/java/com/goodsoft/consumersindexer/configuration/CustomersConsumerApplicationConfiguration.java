@@ -1,5 +1,6 @@
 package com.goodsoft.consumersindexer.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.goodsoft.consumersindexer.logic.CustomerCreatedEventConsumer;
 import com.goodsoft.infra.modulecore.configuration.IConfigurationManager;
 import com.goodsoft.infra.modulecore.configuration.MessageBrokerConfiguration;
@@ -25,7 +26,11 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 @ComponentScan(basePackages = { "com.baeldung.spring.data.es.service" })
 public class CustomersConsumerApplicationConfiguration
 {
-
+    @Bean
+    ObjectMapper objectMapper()
+    {
+        return new ObjectMapper();
+    }
 
     @Bean
     Queue queue(ICustomersConsumerConfigurationManager customersConsumerConfigurationManager)

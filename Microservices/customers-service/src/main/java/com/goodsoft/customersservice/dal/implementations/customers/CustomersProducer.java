@@ -50,7 +50,7 @@ public class CustomersProducer implements ICustomersProducer
         metadata.setCorrelationId(_requestMetadata.getCorrelationId());
         metadata.setAction(Action);
 
-        var message = new Message<CustomerCreatedMessage>();
+        var message = new Message();
         message.setMetadata(metadata);
         message.setData(messageData);
 
