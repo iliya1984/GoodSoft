@@ -21,6 +21,7 @@ import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.elasticsearch.index.query.QueryBuilders.regexpQuery;
 
@@ -51,6 +52,13 @@ public class CustomersDal extends BaseDal implements ICustomersDal
     }
 
     @Override
+    public CustomerEntity getById(UUID id)
+    {
+        //TODO: add implementation
+        return null;
+    }
+
+    @Override
     public CustomerEntity create(CustomerEntity customer) {
 
         var customerId = java.util.UUID.randomUUID();
@@ -60,6 +68,14 @@ public class CustomersDal extends BaseDal implements ICustomersDal
         _producer.notifyCustomerCreated(customer);
 
         return customer;
+    }
+
+    @Override
+    public  void update(CustomerEntity customer)
+    {
+        //TODO: add implementation
+
+
     }
 
     @Override
@@ -135,7 +151,7 @@ public class CustomersDal extends BaseDal implements ICustomersDal
     {
         var collection = _database.getCollection("customers");
 
-        Document document = new Document();
+        var document = new Document();
         document.append("customerId", customer.getId().toString());
         document.append("firstName", customer.getFirstName());
         document.append("lastName", customer.getLastName());

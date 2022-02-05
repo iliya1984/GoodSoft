@@ -3,11 +3,13 @@ package com.goodsoft.customersservice.controllers;
 import com.goodsoft.customersservice.logic.createcustomer.CreateCustomerCommand;
 import com.goodsoft.customersservice.logic.getcustomer.GetCustomerQuery;
 import com.goodsoft.customersservice.logic.searchcustomers.SearchCustomersQuery;
+import com.goodsoft.customersservice.logic.updatecustomer.UpdateCustomerCommand;
 import com.goodsoft.infra.mediator.factory.IPipelineFactory;
 import com.goodsoft.infra.microservice.RestService;
 import com.goodsoft.interfaces.customers.ICustomersService;
 import com.goodsoft.interfaces.customers.models.customers.CreateCustomerModel;
 import com.goodsoft.interfaces.customers.models.customers.GetCustomerResponse;
+import com.goodsoft.interfaces.customers.models.customers.UpdateCustomerModel;
 import com.goodsoft.interfaces.customers.models.search.CustomersSearchResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -70,5 +72,18 @@ public class CustomerController extends RestService implements ICustomersService
         var customer = pipeline.send(request);
 
         return new ResponseEntity(customer, HttpStatus.CREATED);
+    }
+
+    @PostMapping()
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<?> update(@RequestBody UpdateCustomerModel model)
+    {
+        var request = new UpdateCustomerCommand();
+        request.setModel(model);
+
+        var pipeline = _pipelineFactory.getPipeline(request);
+        var customer = pipeline.send(request);
+
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

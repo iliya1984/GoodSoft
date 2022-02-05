@@ -1,12 +1,10 @@
 package com.goodsoft.consumersindexer.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.goodsoft.consumersindexer.logic.CustomerCreatedEventConsumer;
-import com.goodsoft.infra.modulecore.configuration.IConfigurationManager;
+import com.goodsoft.consumersindexer.consumers.CustomerCreatedEventConsumer;
 import com.goodsoft.infra.modulecore.configuration.MessageBrokerConfiguration;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

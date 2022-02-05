@@ -1,14 +1,12 @@
-package com.goodsoft.consumersindexer.logic;
+package com.goodsoft.consumersindexer.consumers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.goodsoft.consumersindexer.dal.abstractions.ICustomersRepository;
-import com.goodsoft.consumersindexer.models.CustmerCreatedMessageWrapper;
 import com.goodsoft.consumersindexer.models.CustomerEntry;
 import com.goodsoft.infra.modulecore.logging.abstractions.ILogger;
 import com.goodsoft.infra.modulecore.logging.abstractions.ILoggerFactory;
 import com.goodsoft.infra.modulecore.messaging.entities.Message;
 import com.goodsoft.interfaces.customers.models.customermessages.CustomerCreatedMessage;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CountDownLatch;
